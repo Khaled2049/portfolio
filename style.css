@@ -1,0 +1,189 @@
+html, body{
+    padding: 0px;
+    margin: 0px;
+}
+.container-fluid{
+    padding: 0px;
+    margin: 0px;
+}
+body{
+    background-color: #2F2F31;
+    background-image: linear-gradient (#2F2F31, #454547);
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+/* profile picture */
+.profilePhoto{
+    max-width: 250px;
+    border-radius: 500px;
+}
+/* border */
+.gap{
+    /* border: 2px black; */
+    display: inline;
+    margin-top: 20px;
+}
+/* Center */
+.center{
+    text-align: center;
+}
+
+i{
+    font-size: 20px;
+    padding: 10px 25px;
+}
+
+div h1,p{
+    text-align: left;
+    padding-top: 10px;
+}
+
+/* HireMe Box */
+/* .box{
+    text-align: center;
+    justify-content: center;
+    line-height: 300px;
+    font-size: 40px;
+    font-family: fantasy;
+    color: white;
+    font-weight: bolder;
+    text-decoration: underline;
+} */
+
+/* Parallax */
+.parallax {
+    /* The image used */
+    background-image: url("images/adventure-atmosphere-conifer-conifers-418831.jpg");
+    /* Set a specific height */
+    min-height: 400px; 
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 0%;
+  }
+.intro{
+    background-color: rgba(82, 82, 82, 0.767);
+    color: azure;
+}
+.intro-p{
+    font-family: fantasy;
+    font-size: 25px;
+}
+.intro h1{
+    color: rgb(238, 255, 4);
+    font-weight: bold;
+}
+/* cards */
+.card{
+    color: black;
+}
+
+/* All headings */
+h5, h1{
+    font-family: 'Arvo', serif;
+}
+
+/* Footer */
+.footer{
+    line-height: 95px;
+    /* min-height: 180px;  */
+    text-align: center;
+    justify-content: center;    
+}
+
+/* Navbar */
+.navbar-custom {
+    background-color: #ff550000;
+}
+/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: rgba(255,255,255,.8);
+    font-family: fantasy;
+    font-size: 40px;
+}
+/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgba(255,255,255,.5);
+}
+/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+.zoom {
+    /* padding: 50px; */
+    transition: transform .2s; /* Animation */
+    /* width: 10px; */
+    /* height: 200px; */
+    margin: auto;
+  }
+  
+  .zoom:hover {
+    transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
+/* My design */
+.design{
+    background-color: rgb(255, 242, 55);
+    height: 400px;
+}
+/* form */
+#form{
+    display: none;
+}
+.btn-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.g{
+    background-color: pink;
+}
+.r{
+    background-color: rgb(211, 161, 25);
+}
+.db{
+    background-color: aqua;
+}
+.ds{
+    background-color: aquamarine;
+}
+.dn{
+    display: none;
+}
+/* .box3, .box4{
+    display: none;
+} */
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+    .intro{
+        text-align: center;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    .parallax{
+        background-size: 100%;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    /* .box3, .box4{
+        display: none;
+    }
+    .profilePhoto{
+        width: 250px;
+        display: inline;
+    } */
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    /* .box3, .box4{
+        display: block;
+    } */
+}
