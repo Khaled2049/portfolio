@@ -16,7 +16,7 @@ body{
 
 /* profile picture */
 .profilePhoto{
-    max-width: 250px;
+    max-width: 50px;
     border-radius: 500px;
     display: none;
 }
@@ -32,7 +32,7 @@ body{
 }
 
 i{
-    font-size: 20px;
+    font-size: 30px;
     padding: 10px 25px;
 }
 
@@ -40,18 +40,6 @@ div h1,p{
     text-align: left;
     padding-top: 10px;
 }
-
-/* HireMe Box */
-/* .box{
-    text-align: center;
-    justify-content: center;
-    line-height: 300px;
-    font-size: 40px;
-    font-family: fantasy;
-    color: white;
-    font-weight: bolder;
-    text-decoration: underline;
-} */
 
 /* Parallax */
 .parallax {
@@ -70,7 +58,7 @@ div h1,p{
     justify-content: center;
     text-align: center;
     line-height: 150px;
-    font-size: 2rem;
+    font-size: 20px;
     font-family: 'Merriweather', serif;
 
 }
@@ -78,6 +66,7 @@ div h1,p{
 /* cards */
 .card{
     color: black;
+    padding-bottom: 20px;
 }
 
 /* All headings */
@@ -127,17 +116,21 @@ h5, h1{
     justify-content: center;
 }
 
-.g{
+.pink{
     background-color: pink;
+    height: 200px;
 }
-.r{
+.yellow{
     background-color: rgb(211, 161, 25);
+    height: 200px;
 }
-.db{
+.aqua{
     background-color: aqua;
+    height: 200px;
 }
-.ds{
+.aquamarine{
     background-color: aquamarine;
+    height: 200px;
 }
 .dn{
     display: none;
@@ -150,9 +143,8 @@ h5, h1{
     .intro{
         text-align: center;
     }
-    
     .profilePhoto{
-        max-width: 200px;
+        max-width: 170px;
         border-radius: 500px;
         display: block;
         margin-left: 30px;;
@@ -164,7 +156,7 @@ h5, h1{
         justify-content: center;
         text-align: center;
         line-height: 180px;
-        font-size: 3rem;
+        font-size: 2rem;
     }
     .parallax {
         /* The image used */
@@ -192,7 +184,7 @@ h5, h1{
       }
 
     .profilePhoto{
-        max-width: 240px;
+        max-width: 230px;
         border-radius: 500px;
         display: block;
     }
@@ -211,11 +203,11 @@ h5, h1{
 @media (min-width: 992px) {
     /* .box3, .box4{
         display: none;
-    }
+    }*/
     .profilePhoto{
-        width: 250px;
+        min-width: 250px;
         display: inline;
-    } */
+    } 
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
