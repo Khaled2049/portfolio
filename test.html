@@ -1,61 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
+<style>
+  .card{
+    width: 200px;
+    min-height: 200px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+  }
+  .card h1{
+    font-size: 30px;
+  }
+  a{
+    text-decoration: none;
+    color: black;
+  }
+</style>
 <body>
-    <img src="images/trees.jpeg" alt="trees">
-    <div class="col">
-        <div class="row mt-3">
-          <div class="col col-md-6">
-            <div class="card mx-auto ds" style="width: 15rem;">
-              <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+  <div class="container">
+    <div class="row">
+      <p>
+        <a href="https://www.google.com">Google</a>
+      </p>
+
+      <div class="col-6"></div>
+      <div class="col-6">
+        <div class="row">
+          <div class="card-deck my-3 mx-2">
+            <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Photography</h5>
-                <p class="card-text">Do we really need special equipment to take pictures? Nuh. All pictures were
-                  taken by mui phone</p>
-                <a href="https://photos.google.com/u/1/share/AF1QipMLjKrhQjrkTOT9gdHM6z5RqM0fs3ko7v0upzAjudZb3PXBL8RXEmqEx7tzvUz14w?key=Zi1tYTBpcUsxZXNxRUVqNVk5aVMyWmtYUVBtc0xR" class="btn btn-primary">Google Photos</a>
+                <h1>Photography</h1>
               </div>
             </div>
-          </div>
-          <!-- Data Structures -->
-          <div class="col col-md-6">
-            <div class="card mx-auto db" style="width: 15rem;">
-              <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-              <div class="card-body">
-                <h5 class="card-title">Books</h5>
-                <p class="card-text">I like to read. Here are my top 10 books that changed my life. It will change yours too. Read em.</p>
-                <a href="book.html" class="btn btn-primary">Book reviews</a>
+            <a href="/book.html">
+              <div class="card">
+                <div class="card-body">
+                  <h1>test</h1>
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
-        <!-- Row-2 -->
-        <div class="row mt-3">
-          <!-- Database -->
-          <div class="col">
-            <div class="card mx-auto g box3" style="width: 15rem;">
+        <div class="row">
+          <div class="card-deck my-3 mx-2">
+            <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Music</h5>
-                <p class="card-text">My passion for music, started when I saw Guthrie Govan's creepy smile and guitar shredding</p>
-                <a href="https://www.youtube.com/channel/UCqlqEaNJORSqkNSMNy87cZA" class="btn btn-primary">Guitar Covers</a>
+                <h1>Book Reviews</h1>
               </div>
             </div>
-          </div>
-          <!-- Web Development -->
-          <div class="col">
-            <div class="card mx-auto r box4" style="width: 15rem;">
-              <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+            <div class="card">
               <div class="card-body">
-                <h5 class="card-title">Programming</h5>
-                <p class="card-text">I like to code, and learn new things. I truly belive knowlege is power. I will become better.</p>
-                <a href="https://leetcode.com/progress/" class="btn btn-primary">Go to my leetcode</a>
+                <h1>Dinner</h1>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 </body>
 </html>
