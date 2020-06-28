@@ -1,0 +1,15 @@
+.center{
+    text-align: center;
+}
+.hidden{
+    display: none;
+}
+.sideBar{
+    background-color: grey;
+    min-height: 100%;
+    color: whitesmoke;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
