@@ -88,7 +88,7 @@ div h1,p{
     /* The image used */
     background-image: url("images/adventure-atmosphere-conifer-conifers-418831.jpg");
     /* Set a specific height */
-    min-height: 150px; 
+    height: 60vh;
     /* Create the parallax scrolling effect */
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -105,13 +105,42 @@ div h1,p{
 
 }
 
-
-
+/* about me shitt */
+.containerr{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.picDiv{
+    width:45%;
+    display: flex;
+    justify-content: center;
+    /* border: solid 1px rgb(255, 255, 255); */
+}
+.aboutDiv{
+    padding: 30px;
+    width:50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: solid 2px rgb(0, 0, 0);
+    font-size: 22px;
+    background-color: rgba(214, 213, 213, 0.664);
+    border-radius: 20px;
+    color: black;
+}
 /* All headings */
 h5, h1{
-    font-family: 'Arvo', serif;
+    font-family: 'Arvo', serif; 
 }
-
+.white-a{
+    text-decoration: none;
+    color: white;
+}
+.navbar-brand{
+    font-family: "ChelseaMarket-Regular";
+    font-size: 30px;
+}
 /* Footer */
 .footer{
     line-height: 55px;
@@ -119,11 +148,60 @@ h5, h1{
     text-align: center;
     justify-content: center;    
 }
+.getInTouch{
+    height: 120vh;
+    background-color: #363685;
+    margin: 70px;
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+}
+i{
+    font-size: 20px;
+}
+/* form/Get in touch */
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.inputwrapper {
+    margin-bottom: 30px;
+    justify-content: center;
+}
+.btn-danger{
+    width: 200px;
+}
+input[type=text], input[type=email], input[type=phone], textarea {
+    padding: 12px 20px; 
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.85rem;
+    box-sizing: border-box;
+}
 
+.newline {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.margin-right-a {
+    margin-right: 20px;
+}
+
+input[type=radio] {
+    margin-right: 10px;
+}
+
+form {
+    margin: 40px 0px;
+}
 /* Navbar */
 .bg-custom{
     background-color:  rgb(231, 114, 46);
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 25px;
 }
 
 .zoom {

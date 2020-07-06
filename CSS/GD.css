@@ -1,17 +1,30 @@
-.col{
-    padding: 0px;
+.logo{
+    width: 350px;
+    height: 350px;
+    padding: 10px;
 }
-.block{
-    height: 200px;
-    background-color: black;
+h1{
     color: white;
+    font-size: 75px;
+    text-align: center;
 }
-.center{
+.main{
+    background: linear-gradient(#e66465, #52589c);
+
+}
+.box{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-.bg-transparent{
-    background-color: rgba(0, 0, 0, 0.123);
+.center-box{
+    width: 350px;
+    height: 500px;
+    background-color: bisque;
+    margin: 10px;
+    border: solid 2px black;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
