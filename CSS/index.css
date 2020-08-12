@@ -1,32 +1,35 @@
 
 .section{
     height: 100vh;
-    background-image: url(/background.jpg);
+    background-image: url(/images/backgrounds.jpg);
     background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+.bg-color{
+    background-color: #1c3144;
+}
+
 .footer{
     color: white;
     height: 8vh;
-    background-color:  rgb(49, 49, 49);
+    background-color:  #1c3144;
     padding: 0;
 }
 .links{
     margin-left: 40px;
 }
-.test{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.navbar-item, .navbar-link {
+    color: white;
 }
 .center{
     display: flex;
-    text-align: center;
-    align-items: center;
-    height: 300px;
-    
+    text-align: center;    
+    flex-direction: column;
 }
 .title{
     color: white;
     font-family: fantasy;
-    font-size: 10rem;
+    font-size: 7rem;
 }
