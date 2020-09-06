@@ -8,7 +8,7 @@ html, body{
     margin: 0px;
 }
 a{
-    color: black;
+    color: white;
     text-decoration: none;
 }
 
@@ -16,15 +16,22 @@ a{
     line-height: 300px;
     background-color:white;
 }
-
+.navbar-light .navbar-brand {
+    color: white;
+}
 a:hover {
     color: rgb(243, 243, 243);
     transform: scaleX(1);
 }
+/* Navbar */
+.bg-custom{
+    background-color: rgb(38, 116, 161);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 20px;
+}
 
 body{
-    background-color: #2b2b28;
-    background-image: linear-gradient (#2F2F31, #454547);
+    background: rgb(27, 26, 26);
     color: white;
     font-family: 'Lato', sans-serif;
 }
@@ -35,6 +42,9 @@ body{
 .profilePhoto{
     max-width: 50px;
     border-radius: 500px;
+    display: none;
+}
+.picDiv{
     display: none;
 }
 /* cards */
@@ -112,14 +122,18 @@ div h1,p{
     align-items: center;
 }
 .picDiv{
-    width:45%;
+    width: 400px; 
+    height: 400px; 
+    border-radius: 500px;
+    
+    width:25%;
     display: flex;
+    display: none;
     justify-content: center;
     /* border: solid 1px rgb(255, 255, 255); */
 }
 .aboutDiv{
     padding: 30px;
-    width:50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -139,15 +153,17 @@ h5, h1{
 }
 .navbar-brand{
     font-family: "ChelseaMarket-Regular";
-    font-size: 30px;
+    font-size: 20px;
 }
 /* Footer */
 .footer{
-    line-height: 55px;
+    background-color: rgb(38, 116, 161);
+    line-height: 50px;
     /* min-height: 180px;  */
     text-align: center;
     justify-content: center;    
 }
+
 .getInTouch{
     height: 120vh;
     background-color: #363685;
@@ -197,12 +213,7 @@ input[type=radio] {
 form {
     margin: 40px 0px;
 }
-/* Navbar */
-.bg-custom{
-    background-color:  rgb(231, 114, 46);
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 25px;
-}
+
 
 .zoom {
     /* padding: 50px; */
@@ -257,13 +268,34 @@ form {
     .intro{
         text-align: center;
     }
+
+    .aboutDiv{
+        padding: 30px;
+        width:50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: solid 2px rgb(0, 0, 0);
+        font-size: 22px;
+        background-color: rgba(214, 213, 213, 0.664);
+        border-radius: 20px;
+        color: black;
+    }
     .profilePhoto{
         max-width: 170px;
         border-radius: 500px;
         display: block;
-        margin-left: 30px;;
+        margin-left: 30px;
+        display: none;
     }
-
+    .picDiv{
+        width: 400px; height: 400px; border-radius: 500px;
+        
+        width:45%;
+        display: flex;
+        justify-content: center;
+        /* border: solid 1px rgb(255, 255, 255); */
+    }
     .intro p{
         background-color: rgba(128, 128, 128, 0.301);
         color: azure;
@@ -329,4 +361,7 @@ form {
     /* .box3, .box4{
         display: block;
     } */
+}
+.navbar-light .navbar-nav .active>.nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .show>.nav-link {
+    color: white;
 }
