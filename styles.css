@@ -212,22 +212,23 @@ section .section-title {
 
     .heading-content{
         position: absolute;
-        top: 10%;
-        width: 100%;
+        top: 3%;
+        width: 50%;
         max-width: 100%;
+        background-color: rgba(255, 255, 255, 0);
     }
 
     .heading-content h5{
-        font-size: 1.2em;
+        font-size: 0.75em;
         top: 10%;
     }
     
     .heading-content h1{
-        font-size: 2em;
+        font-size: 1.2em;
     }
     
     .heading-content p{
-        font-size: 0.7em;
+        font-size: 0.01em;
     }
 
     #contact .post-heading h3{
