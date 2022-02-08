@@ -2,6 +2,14 @@ body {
   background-color: #012443;
 }
 
+.c {
+  color: #7e3b1e;
+  width: 100vw;
+  background-color: #ffffff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.25rem;
+}
+
 body::-webkit-scrollbar {
   display: none;
 }
