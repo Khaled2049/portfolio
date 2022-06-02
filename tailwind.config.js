@@ -1,7 +1,16 @@
+const colors = require('tailwindcss/colors');
+
 module.exports = {
-  content: ['./src/**/*.{html,js}'],
+  content: ['./index.html'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: '#191A19',
+        secondary: '#1E5128',
+        primary: '#4E9F3D',
+        highlight: '#D8E9A8',
+      },
+    },
   },
   plugins: [],
 };
