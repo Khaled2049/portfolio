@@ -1,3 +1,8 @@
+body {
+  background-color: #dddddd;
+  color: #222831;
+}
+
 .about {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -24,6 +29,20 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.jumbotron {
+  background-color: #333385;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #dd9a52 24px), repeating-linear-gradient(#2890ca55, #2890ca);
+  height: 60vh;
+}
+
+.jumbotron .content {
+  color: #dddddd;
+  background-color: #313131c7;
+  border-radius: 2rem;
+  padding: 2rem;
+  text-align: center;
 }
 
 @media (min-width: 576px) {

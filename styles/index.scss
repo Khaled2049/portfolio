@@ -1,4 +1,10 @@
-.about {    
+@import 'variables.scss';
+
+body{
+    background-color: $base;
+    color: $primary;
+}
+.about {        
     display: flex;
     align-items: center;
     height: 50vh;
@@ -11,14 +17,28 @@
     }
 }
 
-.projects {
+
+.projects {    
     display: flex;
-    // text-align: center;
     min-height: 50vh;
     justify-content: center;    
 }
 
+.jumbotron{
+    background-color: #333385;
+    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #dd9a52 24px ), repeating-linear-gradient( #2890ca55, #2890ca );
+    height: 60vh;
+    .content {
+        color: $base;
+        background-color: #313131c7;
+        border-radius: 2rem;
+        padding: 2rem;
+        text-align: center;
+    }
+}
+
 @media (min-width: 576px) { 
+    
     .about {        
         display: flex;
         align-items: center;
