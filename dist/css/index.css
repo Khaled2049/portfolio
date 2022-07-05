@@ -1,0 +1,47 @@
+.about {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 50vh;
+  margin-top: 4rem;
+}
+
+.about img {
+  width: 200px;
+  height: 200xp;
+  border-radius: 100%;
+  display: none;
+}
+
+.projects {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 50vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+@media (min-width: 576px) {
+  .about {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 50vh;
+    margin-top: 4rem;
+  }
+  .about img {
+    width: 400px;
+    height: 400xp;
+    border-radius: 100%;
+    display: block;
+  }
+}
+/*# sourceMappingURL=index.css.map */

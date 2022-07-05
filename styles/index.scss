@@ -1,0 +1,43 @@
+.about {    
+    display: flex;
+    align-items: center;
+    height: 50vh;
+    margin-top: 4rem;
+    img {
+        width: 200px;
+        height: 200xp;
+        border-radius: 100%;
+        display: none;
+    }
+}
+
+.projects {
+    display: flex;
+    // text-align: center;
+    min-height: 50vh;
+    justify-content: center;    
+}
+
+@media (min-width: 576px) { 
+    .about {        
+        display: flex;
+        align-items: center;
+        height: 50vh;
+        margin-top: 4rem;
+        img {
+            width: 400px;
+            height: 400xp;
+            border-radius: 100%;
+            display: block;
+        }
+    }
+ }
+
+// Medium devices (tablets, 768px and up)
+// @media (min-width: 768px) { ... }
+
+// // Large devices (desktops, 992px and up)
+// @media (min-width: 992px) { ... }
+
+// // Extra large devices (large desktops, 1200px and up)
+// @media (min-width: 1200px) { ... }
