@@ -32,6 +32,11 @@ body {
           justify-content: center;
 }
 
+.carousel-inner > .item > img {
+  min-width: 100%;
+  width: 100%;
+}
+
 .jumbotron {
   background-color: #045de9;
   background-image: linear-gradient(315deg, #06347e 0%, #049ec9 74%);
