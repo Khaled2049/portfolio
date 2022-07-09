@@ -18,17 +18,23 @@ body{
     }
 }
 
-
 .projects {    
     display: flex;
     min-height: 50vh;
     justify-content: center;    
 }
 
-.jumbotron{
+.jumbotron{    
     background-color: #045de9;
-    background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+    background-image: linear-gradient(315deg, #06347e 0%, #049ec9 74%);
     height: 60vh;    
+    justify-content: center;
+    #particles-js {
+        position: absolute;
+        top: 100px;
+        width: 95%;
+        height: 450px;
+    }
     .content {
         color: $base;
         border-radius: 2rem;
@@ -59,6 +65,35 @@ body{
         }
     }
  }
+
+ a, a > span {
+    position: relative;
+    color: inherit;
+    text-decoration: none;
+    line-height: 24px;
+  }
+  a:before, a:after, a > span:before, a > span:after {
+    content: '';
+    position: absolute;
+    transition: transform .5s ease;
+  }
+  .hover-3 {
+    display: inline-flex;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    overflow: hidden;
+  }
+  .hover-3:before {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: $highlight;
+    transform: translateX(-100%);
+  }
+  .hover-3:hover:before {
+    transform: translateX(0);
+  }
 
 // Medium devices (tablets, 768px and up)
 // @media (min-width: 768px) { ... }

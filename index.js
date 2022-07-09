@@ -21,3 +21,7 @@ sendButton.addEventListener('click', (event) => {
     console.log('Enter Email, firstname, lastname & message');
   }
 });
+
+particlesJS.load('particles-js', 'assets/particles.json', function () {
+  console.log('callback - particles.js config loaded');
+});

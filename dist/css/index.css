@@ -34,8 +34,18 @@ body {
 
 .jumbotron {
   background-color: #045de9;
-  background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+  background-image: linear-gradient(315deg, #06347e 0%, #049ec9 74%);
   height: 60vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.jumbotron #particles-js {
+  position: absolute;
+  top: 100px;
+  width: 95%;
+  height: 450px;
 }
 
 .jumbotron .content {
@@ -67,5 +77,45 @@ body {
     border-radius: 100%;
     display: block;
   }
+}
+
+a, a > span {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  line-height: 24px;
+}
+
+a:before, a:after, a > span:before, a > span:after {
+  content: '';
+  position: absolute;
+  -webkit-transition: -webkit-transform .5s ease;
+  transition: -webkit-transform .5s ease;
+  transition: transform .5s ease;
+  transition: transform .5s ease, -webkit-transform .5s ease;
+}
+
+.hover-3 {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  overflow: hidden;
+}
+
+.hover-3:before {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #1363DF;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+}
+
+.hover-3:hover:before {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
 }
 /*# sourceMappingURL=index.css.map */
