@@ -1,6 +1,7 @@
 body {
-  background-color: #dddddd;
-  color: #222831;
+  background-color: #06283D;
+  color: #7ad6fa;
+  background-color: #06283D;
 }
 
 .about {
@@ -32,17 +33,21 @@ body {
 }
 
 .jumbotron {
-  background-color: #333385;
-  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #dd9a52 24px), repeating-linear-gradient(#2890ca55, #2890ca);
+  background-color: #045de9;
+  background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
   height: 60vh;
 }
 
 .jumbotron .content {
-  color: #dddddd;
-  background-color: #313131c7;
+  color: #06283D;
   border-radius: 2rem;
   padding: 2rem;
   text-align: center;
+}
+
+.card {
+  color: black;
+  background-color: #FFEE63;
 }
 
 @media (min-width: 576px) {
