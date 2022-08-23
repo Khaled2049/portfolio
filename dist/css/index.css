@@ -1,3 +1,8 @@
+body::-webkit-scrollbar {
+  display: none;
+  /* Safari and Chrome */
+}
+
 body {
   background-color: #06283D;
   color: #7ad6fa;
@@ -11,8 +16,9 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  height: 50vh;
+  height: 40vh;
   margin-top: 4rem;
+  font-family: 'Red Hat Display', sans-serif;
 }
 
 .about img {
@@ -20,6 +26,16 @@ body {
   height: 200xp;
   border-radius: 100%;
   display: none;
+}
+
+.heading {
+  color: aqua;
+}
+
+.heading:hover {
+  text-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 100px #03e9f4;
+  -webkit-transition: color  .1s;
+  transition: color  .1s;
 }
 
 .projects {
@@ -32,6 +48,12 @@ body {
           justify-content: center;
 }
 
+.footer a:hover {
+  color: #FFEE63;
+  -webkit-transition: color 0.5s;
+  transition: color 0.5s;
+}
+
 .carousel-inner > .item > img {
   min-width: 100%;
   width: 100%;
@@ -40,17 +62,18 @@ body {
 .jumbotron {
   background-color: #045de9;
   background-image: linear-gradient(315deg, #06347e 0%, #049ec9 74%);
-  height: 60vh;
+  height: 50vh;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  font-family: 'Shadows Into Light', cursive;
 }
 
 .jumbotron #particles-js {
   position: absolute;
   top: 100px;
   width: 95%;
-  height: 450px;
+  height: 350px;
 }
 
 .jumbotron .content {
@@ -63,6 +86,55 @@ body {
 .card {
   color: black;
   background-color: #FFEE63;
+}
+
+.card:hover {
+  -webkit-animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+          animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+
+@-webkit-keyframes shake {
+  10%, 90% {
+    -webkit-transform: translate3d(-1px, 0, 0);
+            transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    -webkit-transform: translate3d(2px, 0, 0);
+            transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    -webkit-transform: translate3d(-4px, 0, 0);
+            transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    -webkit-transform: translate3d(4px, 0, 0);
+            transform: translate3d(4px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  10%, 90% {
+    -webkit-transform: translate3d(-1px, 0, 0);
+            transform: translate3d(-1px, 0, 0);
+  }
+  20%, 80% {
+    -webkit-transform: translate3d(2px, 0, 0);
+            transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    -webkit-transform: translate3d(-4px, 0, 0);
+            transform: translate3d(-4px, 0, 0);
+  }
+  40%, 60% {
+    -webkit-transform: translate3d(4px, 0, 0);
+            transform: translate3d(4px, 0, 0);
+  }
 }
 
 @media (min-width: 576px) {
