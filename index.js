@@ -25,3 +25,53 @@ sendButton.addEventListener('click', (event) => {
 particlesJS.load('particles-js', 'assets/particles.json', function () {
   console.log('callback - particles.js config loaded');
 });
+
+gsap.from('.display-1', {
+  duration: 1,
+  y: '-100%',
+  ease: 'bounce',
+});
+
+gsap.from('.nav-link', {
+  duration: 1,
+  opacity: 0,
+  delay: 0.25,
+  stagger: 0.15,
+});
+
+gsap.from('.lead', {
+  duration: 1,
+  opacity: 0,
+  delay: 0.25,
+  ease: 'power2.in',
+});
+
+gsap.from('.card', {
+  x: '100%',
+  duration: 0.25,
+  opacity: 0,
+  delay: 0.15,
+  ease: 'power2.in',
+});
+
+gsap.fromTo(
+  '.heading',
+  {
+    opacity: 0,
+    scale: 0,
+  },
+  {
+    duration: 0.25,
+    delay: 0.25,
+    opacity: 1,
+    scale: 1,
+  }
+);
+
+gsap.from('.me', {
+  x: '100%',
+  duration: 1,
+  opacity: 0,
+  delay: 2,
+  ease: 'back.out(3)',
+});
