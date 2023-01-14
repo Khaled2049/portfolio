@@ -9,8 +9,13 @@ const About = () => {
         </h1>
         <p className="px-8 mt-8 mb-12 text-lg">Welcome to my website.</p>
         <div className="flex flex-wrap justify-center">
-          <button className="px-8 py-3 m-2 text-lg border rounded dark:text-gray-50 dark:border-gray-700">
-            Hire Me
+          <button
+            type="button"
+            className="inline-block px-6 py-2.5 border-2 border-black font-xl text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+            data-mdb-ripple="true"
+            data-mdb-ripple-color="light"
+          >
+            Contact
           </button>
         </div>
       </div>

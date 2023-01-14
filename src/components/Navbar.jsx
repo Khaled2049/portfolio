@@ -6,17 +6,17 @@ import {
   Button,
   IconButton,
 } from "@material-tailwind/react";
- 
+
 export default function Example() {
   const [openNav, setOpenNav] = useState(false);
- 
+
   useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
- 
+
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -35,7 +35,11 @@ export default function Example() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <a
+          href="https://khaled2049.github.io/"
+          target="_blank"
+          className="flex items-center"
+        >
           Blog
         </a>
       </Typography>
@@ -61,7 +65,7 @@ export default function Example() {
       </Typography>
     </ul>
   );
- 
+
   return (
     <Navbar className="mx-auto max-w-screen-xl my-2 py-2 px-4 lg:px-8 lg:py-4">
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">

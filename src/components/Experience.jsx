@@ -3,7 +3,13 @@ import React from "react";
 const Experience = () => {
   return (
     <div className="container mx-auto">
-      <h1 className="text-center uppercase">Professional Work Experience</h1>
+      <div className="text-center">
+        <div className=" rounded-2xl inline-block text-2xl md:text-4xl mt-4 uppercase m-4 p-3">
+          <span className="text-center inline-block text-2xl md:text-4xl uppercase  hover:scale-110 transition duration-300 ease-in-out">
+            Work Experience
+          </span>
+        </div>
+      </div>
       <div className="flex items-center justify-center py-10">
         <div className="max-w-screen-sm lg:max-w-screen-md xl:max-w-screen-lg px-20 ">
           <ol className="relative border-l-4 border-indigo-600 leading-loose">

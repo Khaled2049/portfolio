@@ -5,7 +5,7 @@ const Contact = () => {
     <div className="max-w-screen-md mx-auto p-5">
       <div className="text-center mb-16">
         <h3 className="text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-gray-900">
-          Get In <span className="text-indigo-600">Touch</span>
+          <span>Get In Touch</span>
         </h3>
       </div>
 
