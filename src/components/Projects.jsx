@@ -1,9 +1,11 @@
-import React from "react";
-import ProjectCard from "./ProjectCard";
+import React from 'react';
+import ProjectCard from './ProjectCard';
 const Projects = () => {
   return (
-    <div className="container mx-auto">
-      <h1 className="text-center uppercase m-4">Featured Projects</h1>
+    <div id="projects" className="container mx-auto">
+      <h1 className="text-center text-primary text-4xl py-8 uppercase m-4">
+        Featured Projects
+      </h1>
       <div className="grid grid-rows-3 md:grid-rows-1 grid-flow-col gap-2">
         <ProjectCard
           img="https://mdbootstrap.com/img/new/standard/nature/184.jpg"
