@@ -1,20 +1,20 @@
 import {
   About,
   Experience,
-  Navbar,
   Projects,
   Contact,
   Footer,
   Skills,
-} from "./components";
+  Navbar,
+} from './components';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-bg">
       <Navbar />
       <About />
       <Projects />
-      <Skills />
+      {/* <Skills /> */}
       <Experience />
       <Contact />
       <Footer />
