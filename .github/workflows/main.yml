@@ -23,8 +23,8 @@ jobs:
       - run: yarn
       - run: yarn build
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: dist
-    Contents: '**' # string. Required. Contents. Default: **.
-    TargetFolder: ..
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: dist
+      Contents: '**' # string. Required. Contents. Default: **.
+      TargetFolder: ..
