@@ -22,9 +22,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: yarn
       - run: yarn build
-
-  - task: CopyFiles@2
-    inputs:
-      SourceFolder: dist
-      Contents: '**' # string. Required. Contents. Default: **.
-      TargetFolder: ..
+      - run: yarn run doit
