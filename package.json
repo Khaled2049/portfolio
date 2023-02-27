@@ -10,7 +10,7 @@
     "remove": "rm -r ./assets/*",
     "copyjs": "cp -r ./dist/assets/*.js ./assets/index.js",
     "copycss": "cp -r ./dist/assets/*.css ./assets/index.css",
-    "doit": "yarn build & yarn run copyjs & yarn run copycss"
+    "doit": "yarn build && yarn run copyjs && yarn run copycss"
   },
   "dependencies": {
     "@material-tailwind/react": "^1.2.5",
