@@ -4,7 +4,7 @@ import {
   Projects,
   Contact,
   Footer,
-  Skills,
+  // Skills,
   Navbar,
 } from './components';
 

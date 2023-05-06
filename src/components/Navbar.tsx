@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Navbar,
-  MobileNav,
+  Collapse,
   Typography,
   Button,
   IconButton,
-} from "@material-tailwind/react";
+} from '@material-tailwind/react';
 
 export default function Example() {
   const [openNav, setOpenNav] = useState(false);
 
   useEffect(() => {
     window.addEventListener(
-      "resize",
+      'resize',
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
@@ -126,12 +126,12 @@ export default function Example() {
             )}
           </IconButton>
         </div>
-        <MobileNav open={openNav}>
+        <Collapse open={openNav}>
           {navList}
           <Button variant="gradient" size="sm" fullWidth className="mb-2">
             <span>Contact</span>
           </Button>
-        </MobileNav>
+        </Collapse>
       </Navbar>
     </div>
   );
