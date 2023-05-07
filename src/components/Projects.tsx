@@ -7,25 +7,17 @@ const Projects = () => {
       <h1 className="text-center text-primary text-4xl py-8 uppercase m-4">
         Featured Projects
       </h1>
-      {projects.map((project) => {
-        console.log(project.ArtX);
-      })}
       <div className="grid grid-rows-3 md:grid-rows-1 grid-flow-col gap-2">
-        <ProjectCard
-          img="https://mdbootstrap.com/img/new/standard/nature/184.jpg"
-          title="ArtC"
-          desc="Short Description"
-        />
-        <ProjectCard
-          img="https://mdbootstrap.com/img/new/standard/nature/184.jpg"
-          title="ArtC"
-          desc="Short Description"
-        />
-        <ProjectCard
-          img="https://mdbootstrap.com/img/new/standard/nature/184.jpg"
-          title="ArtC"
-          desc="Short Description"
-        />
+        {projects.map((project: any) => {
+          return (
+            <ProjectCard
+              // img="https://mdbootstrap.com/img/new/standard/nature/184.jpg"
+              title={project.title}
+              desc={project.description}
+              code={project.code}
+            />
+          );
+        })}
       </div>
     </div>
   );
