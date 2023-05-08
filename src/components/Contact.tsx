@@ -1,5 +1,3 @@
-import React from "react";
-
 const Contact = () => {
   return (
     <div id="contact" className="max-w-screen-md mx-auto p-5">
@@ -69,9 +67,9 @@ const Contact = () => {
               Your Message
             </label>
             <textarea
-              rows="10"
+              rows={10}
               className="appearance-none block w-full bg-gray-200 text-primary border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            ></textarea>
+            />
           </div>
           <div className="flex justify-between w-full px-3">
             <button

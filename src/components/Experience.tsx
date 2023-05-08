@@ -1,16 +1,12 @@
-import React from "react";
-
 const Experience = () => {
   const data = [
     {
       job: "Application Developer",
       date: "2023",
       company: "Application Developer",
-      duration: "1 year",
+      duration: "1 year 4 months (current)",
       desc: "Worked on modernizing our older repositories and integrated salesforce using lambda functions, SNS, SQS, secrets manager and other services using NodeJs and typescript. \
-      Implemented the serverless framework to improve deployment time and added logging for improved visibility. \
-      Implemented Datadog monitoring across AWS services for better observability. \
-      Followed test-driven development and increased code coverage from 70% to 95%",
+      Implemented the serverless framework to improve deployment time and added logging for improved visibility.",
     },
     {
       job: "Associate Software Developer",
@@ -18,10 +14,7 @@ const Experience = () => {
       company: "OnPoint - A Koch Engineered Solutions Company",
       duration: "8 months",
       desc: "Designed and developed user management and organization management applications using VueJs & typescript which improved onboarding time for our assets and companies. \
-      Created beautiful tables to display information from DynamoDB. \
-      Worked with an agile team of 10 members and participated in daily \
-      stand-up meetings. \
-      Maintained website and solved Visual & Workflow bugs while using Jest to create tests and improve code coverage.",
+      Created beautiful tables to display information from DynamoDB.",
     },
     {
       job: "Software Engineer Intern",

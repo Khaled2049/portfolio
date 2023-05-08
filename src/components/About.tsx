@@ -1,5 +1,3 @@
-import React from "react";
-
 const About = () => {
   return (
     <section className="text-primary">
@@ -10,10 +8,7 @@ const About = () => {
         </p>
 
         <div className="flex flex-wrap justify-center">
-          <button
-            href="#contact"
-            className="px-8 py-3 m-2 text-lg border rounded text-primary dark:border-gray-700"
-          >
+          <button className="px-8 py-3 m-2 text-lg border rounded text-primary dark:border-gray-700">
             Say Hi back!
           </button>
         </div>

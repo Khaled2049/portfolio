@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   Navbar,
   Collapse,
   Typography,
   Button,
   IconButton,
-} from '@material-tailwind/react';
+} from "@material-tailwind/react";
 
 export default function Example() {
   const [openNav, setOpenNav] = useState(false);
 
   useEffect(() => {
     window.addEventListener(
-      'resize',
+      "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
@@ -84,9 +84,7 @@ export default function Example() {
             size="sm"
             className="hidden lg:inline-block"
           >
-            <span className="font-rubik" href="#contact">
-              Contact
-            </span>
+            <span className="font-rubik">Contact</span>
           </Button>
           <IconButton
             variant="text"
