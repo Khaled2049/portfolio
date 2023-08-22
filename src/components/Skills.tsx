@@ -1,4 +1,3 @@
-import React from "react";
 import Pill from "./Pill";
 
 const skills = ["React", "TS", "Python", "Golang", "AWS", "Git"];
