@@ -59,7 +59,12 @@ export default function Example() {
         color="blue-gray"
         className="p-1 font-rubik uppercase text-primary"
       >
-        <a href="#" className="flex items-center">
+        <a
+          href="../../public/Resume.pdf"
+          download="Khaled Hossain Resume"
+          target="_blank"
+          className="flex items-center"
+        >
           Resume
         </a>
       </Typography>
@@ -67,7 +72,7 @@ export default function Example() {
   );
 
   return (
-    <div className="pt-5">
+    <div className="p-5">
       <Navbar className="mx-auto bg-secondary  max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4">
         <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
           <Typography
