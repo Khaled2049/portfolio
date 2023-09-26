@@ -1,4 +1,4 @@
-import { ProjectCard, ProjectCarousel } from "../components";
+import { ProjectCard } from "../components";
 import projects from "../data/projects.ts";
 
 const Projects = () => {
