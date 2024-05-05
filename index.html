@@ -1,1 +1,220 @@
-Hi, I'm Khaled and I'm currently updating this website. Please check back later.
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khaled Hossain</title>
+    <link href="./output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body class="bg-c-black text-c-white flex flex-col min-h-screen">
+    <!-- Navigation -->
+    <nav class="py-4 bg-c-black shadow text-c-white">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <a href="index.html" class="text-2xl font-bold text-c-red"
+              >Khaled Hossain</a
+            >
+          </div>
+          <div>
+            <ul class="flex space-x-4">
+              <li>
+                <a href="index.html" class="hover:text-c-blue">Home</a>
+              </li>
+              <li>
+                <a href="/resume.html" class="hover:text-c-blue">Resume</a>
+              </li>
+              <li>
+                <a
+                  target="_blank"
+                  href="https://khaled2049.github.io/"
+                  class="hover:text-c-gray"
+                  >Blog</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto bg-c-black px-4 py-8 flex-grow">
+      <div class="max-w-screen-lg mx-auto shadow-md">
+        <!-- Row with Two Columns -->
+        <div class="flex flex-col md:flex-row rounded-[10px]">
+          <!-- First Column (Left) -->
+          <div class="md:w-1/2 p-4">
+            <div class="relative bg-center h-[600px] max-w-[600px] my-10">
+              <!-- Image as Background -->
+              <div
+                class="absolute inset-0 bg-cover bg-center rounded-[50px]"
+                style="background-image: url('/public/me.jpg')"
+              >
+                <div
+                  class="container mx-auto px-4 h-full flex items-center justify-center"
+                >
+                  <h1
+                    class="mb-80 text-2xl md:text-xl text-center p-2 font-bold mb-4 border-4 bg-blue-500"
+                  >
+                    Hey there,👋 I'm Khaled!
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Second Column (Right) -->
+          <div
+            class="md:w-1/2 p-4 mt-4 md:mt-0 md:ml-4 flex items-center justify-center"
+          >
+            <!-- About Section -->
+            <section class="mt-8">
+              <h2 class="text-2xl font-bold mb-4 text-c-blue">Who am I?</h2>
+              <p>
+                A software engineer with a passion for React Native, AWS,
+                Machine Learning, and all things tech. When I'm not busy coding,
+                you'll often find me ⛷️, trekking through forests, or exploring
+                the great outdoors. Let's climb mountains and build dreams
+                together!
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <section class="mt-20">
+        <h2 class="text-2xl font-bold mb-4 text-c-blue">Featured Projects</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+          <!-- Project 1 -->
+          <a href="https://github.com/Khaled2049/all-out" target="_blank">
+            <div class="bg-c-white p-4 shadow rounded">
+              <h3 class="text-xl font-bold mb-2 text-c-red">AllOut</h3>
+              <div
+                class="relative bg-cover bg-center h-80 mt-8"
+                style="background-image: url('/public/splash.png')"
+              >
+                <div class="absolute inset-0 bg-c-gray opacity-50"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="text-center text-white">
+                    <p class="text-lg md:text-xl"></p>
+                  </div>
+                </div>
+              </div>
+              <p class="text-stone-800">
+                An outdoor adventure app made using react-native and expo. The
+                goal was to enhance outdoor adventure experiences for users. For
+                hiking, camping, biking, and climbing. Features include ML
+                recommendation system and Graphql backend.s
+              </p>
+            </div>
+          </a>
+
+          <!-- Project 2 -->
+          <a href="https://github.com/Khaled2049/CSCI-4502-5502-Final-Project">
+            <div class="bg-c-white p-4 shadow rounded">
+              <h3 class="text-xl font-bold mb-2 text-c-red">CourseCraft</h3>
+              <div
+                class="relative bg-cover bg-center h-80 mt-8"
+                style="background-image: url('/public/CourseCraft.png')"
+              >
+                <div class="absolute inset-0 bg-c-gray opacity-50"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="text-center text-white">
+                    <p class="text-lg md:text-xl"></p>
+                  </div>
+                </div>
+              </div>
+              <p class="text-stone-800 min-h-20 p-3">
+                We used python, numpy and pandas to build a user-user and
+                item-user based collaborative filtering systems to try and
+                predict/reccomend classes a student should take in college.
+              </p>
+            </div>
+          </a>
+
+          <!-- ArtX -->
+          <!-- <div class="bg-c-white p-4 shadow rounded">
+            <h3 class="text-xl font-bold mb-2 text-c-red">ArtX</h3>
+            <div class="relative bg-cover bg-center h-80 mt-8" style="">
+              <div class="absolute inset-0 bg-c-gray opacity-50"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center text-white">
+                  <h1 class="text-4xl md:text-6xl font-bold mb-4">ArtX</h1>
+                  <p class="text-lg md:text-xl">ArtX Description</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-stone-800">Description of ArtX.</p>
+          </div> -->
+
+          <!-- Safe -->
+          <!-- <div class="bg-c-white p-4 shadow rounded">
+            <h3 class="text-xl font-bold mb-2 text-c-red">Safe</h3>
+            <div class="relative bg-cover bg-center h-80 mt-8" style="">
+              <div class="absolute inset-0 bg-c-gray opacity-50"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center text-white">
+                  <h1 class="text-4xl md:text-6xl font-bold mb-4">Safe</h1>
+                  <p class="text-lg md:text-xl">Safe Description</p>
+                </div>
+              </div>
+            </div>
+            <p class="text-stone-800">Description of Safe.</p>
+          </div> -->
+        </div>
+      </section>
+    </div>
+    <div class="mt-8 text-center">
+      <h3 class="text-xl font-bold mb-2 text-c-blue">
+        See more of my work...
+        <span
+          ><a
+            href="https://github.com/khaled2049"
+            class="text-c-red hover:underline"
+            >GitHub</a
+          ></span
+        >
+      </h3>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-c-black text-white">
+      <div class="container mx-auto py-4 flex justify-center">
+        <div class="flex items-center space-x-8">
+          <!-- GitHub Link -->
+          <a
+            href="https://github.com/khaled2049"
+            class="hover:text-c-gray"
+            target="_blank"
+          >
+            <i class="fab fa-github-square text-4xl"></i>
+          </a>
+          <!-- LinkedIn Link -->
+          <a
+            href="https://www.linkedin.com/in/khaledhossainn/"
+            class="hover:text-c-gray"
+            target="_blank"
+          >
+            <i class="fab fa-linkedin text-4xl"></i>
+          </a>
+          <!-- Email Link -->
+          <a
+            href="mailto:khaledhossain.not@gmail.com"
+            class="hover:text-c-gray"
+          >
+            <i class="fas fa-envelope-square text-4xl"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

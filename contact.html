@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Me</title>
+    <link href="./output.css" rel="stylesheet" />
+    <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@400;700&display=swap"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+</head>
+  </head>
+
+  <body class="bg-gray-100">
+    <nav class="py-4 bg-white shadow">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center">
+          <div>
+            <a href="/" class="text-xl font-bold">My Portfolio</a>
+          </div>
+          <div>
+            <ul class="flex space-x-4">
+              <li>
+                <a href="/" class="hover:text-gray-600">Home</a>
+              </li>
+              <li>
+                <a href="/resume.html" class="hover:text-gray-600"
+                  >Resume</a
+                >
+              </li>
+              <li>
+                <a
+                  target="_blank"
+                  href="https://khaled2049.github.io/"
+                  class="hover:text-gray-600"
+                  >Blog</a
+                >
+              </li>
+              <li>
+                <a href="/contact.html" class="hover:text-gray-600"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container mx-auto py-8">
+      <div class="max-w-md mx-auto bg-white p-8 rounded-md shadow-md">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Contact Me</h2>
+
+        <!-- Contact Form -->
+        <form action="#" method="POST">
+          <!-- Name Input -->
+          <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-600"
+              >Your Name</label
+            >
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+
+          <!-- Email Input -->
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-600"
+              >Your Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+
+          <!-- Message Input -->
+          <div class="mb-6">
+            <label for="message" class="block text-sm font-medium text-gray-600"
+              >Your Message</label
+            >
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

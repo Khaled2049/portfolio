@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global font settings */
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+/* Specific styles for headings */
+h1,
+h2,
+h3 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+}
+
+/* Navbar and footer links */
+.navbar a,
+.footer a {
+  font-family: "Nunito", sans-serif;
+}
