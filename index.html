@@ -4,244 +4,498 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Khaled Hossain</title>
-    <link href="./output.css" rel="stylesheet" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Nunito:wght@400;700&display=swap"
-    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Main body and text colors */
+      body {
+        font-family: "Fira Code", monospace;
+        background-color: #0a1a16;
+        color: #d1fae5;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        position: relative;
+      }
+
+      .gradient-text {
+        background: linear-gradient(45deg, #34d399, #10b981);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .bg-dark-green {
+        background-color: #0d3026;
+      }
+      .border-dark-green {
+        border-color: #14532d;
+      }
+      .hover-border-light-green:hover {
+        border-color: #34d399;
+      }
+
+      /* Starry background container */
+      .background-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background-color: #0a1a16;
+        overflow: hidden;
+      }
+
+      /* Star style with green theme */
+      .star {
+        position: absolute;
+        width: 2px;
+        height: 2px;
+        background-color: rgba(
+          52,
+          211,
+          153,
+          0.8
+        ); /* Soft green color for stars */
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: twinkle 2s infinite ease-in-out alternate,
+          moveStar 10s infinite linear;
+      }
+
+      /* Keyframes for star twinkling effect */
+      @keyframes twinkle {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        50% {
+          transform: scale(2);
+          opacity: 1;
+        }
+      }
+
+      /* Keyframes for random star movement */
+      @keyframes moveStar {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(
+            calc(-30px + 60px * var(--randomX)),
+            calc(-30px + 60px * var(--randomY))
+          );
+        }
+        50% {
+          transform: translate(
+            calc(-60px + 120px * var(--randomX)),
+            calc(-60px + 120px * var(--randomY))
+          );
+        }
+        75% {
+          transform: translate(
+            calc(-30px + 60px * var(--randomX)),
+            calc(-30px + 60px * var(--randomY))
+          );
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+    </style>
   </head>
-  <body class="bg-c-black text-c-white flex flex-col min-h-screen">
-    <!-- Navigation -->
-    <nav class="py-4 bg-c-black shadow text-c-white">
-      <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center">
-          <div>
-            <a href="index.html" class="text-2xl font-bold text-c-red"
-              >Khaled Hossain</a
+  <body class="overflow-y-auto text-gray-300 relative">
+    <div class="background-animation"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Star background animation
+        function createStar() {
+          const star = document.createElement("div");
+          star.classList.add("star");
+
+          // Randomize the position of each star
+          star.style.top = `${Math.random() * 100}vh`;
+          star.style.left = `${Math.random() * 100}vw`;
+
+          // Randomize movement
+          star.style.setProperty("--randomX", Math.random());
+          star.style.setProperty("--randomY", Math.random());
+
+          document.querySelector(".background-animation").appendChild(star);
+        }
+
+        // Generate multiple stars
+        for (let i = 0; i < 200; i++) {
+          createStar();
+        }
+
+        // Contact form email functionality
+        document
+          .getElementById("contactForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+
+            // Construct the mailto link
+            const mailtoLink = `mailto:khaledhossain.dev@gmail.com?subject=Contact%20Form%20Submission%20from%20${encodeURIComponent(
+              name
+            )}&body=Name:%20${encodeURIComponent(
+              name
+            )}%0AEmail:%20${encodeURIComponent(
+              email
+            )}%0A%0AMessage:%0A${encodeURIComponent(message)}`;
+
+            // Open the mailto link
+            window.location.href = mailtoLink;
+          });
+      });
+    </script>
+
+    <!-- Content Wrapper -->
+    <div class="relative z-10">
+      <!-- Hero Section -->
+      <header class="py-10 md:py-20 text-center px-4">
+        <h1 class="text-3xl md:text-5xl font-bold mb-2 md:mb-4">
+          Khaled Hossain
+        </h1>
+        <p class="text-lg md:text-xl text-gray-400">
+          Turning Coffee into Backend Code & Machine Learning Models
+        </p>
+        <!-- Social Links Section -->
+        <section id="social-links" class="max-w-4xl mx-auto px-4 pt-4">
+          <div class="flex justify-center space-x-6 text-gray-400">
+            <!-- GitHub -->
+            <a
+              href="https://github.com/Khaled2049"
+              target="_blank"
+              class="hover:text-green-400 transition"
+            >
+              <i class="fab fa-github fa-2x"></i>
+            </a>
+
+            <!-- Mail -->
+            <a
+              href="mailto:khaledhossain.dev@gmail.com"
+              class="hover:text-green-400 transition"
+            >
+              <i class="fas fa-envelope fa-2x"></i>
+            </a>
+
+            <!-- LinkedIn -->
+            <a
+              href="https://www.linkedin.com/in/khaledhossainn/"
+              target="_blank"
+              class="hover:text-green-400 transition"
+            >
+              <i class="fab fa-linkedin fa-2x"></i>
+            </a>
+          </div>
+        </section>
+      </header>
+
+      <!-- About Section -->
+      <section id="about" class="max-w-4xl mx-auto px-4 py-8 md:py-16">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8 gradient-text">
+          About Me
+        </h2>
+        <p class="text-gray-400 text-base md:text-lg leading-relaxed">
+          A software engineer with a passion for problem solving and all things
+          tech. When I'm not busy coding, you'll often find me ⛷️ hiking through
+          forests, or exploring the great outdoors. Let's climb mountains and
+          build dreams together!
+        </p>
+        <p class="text-gray-400 text-base md:text-lg leading-relaxed mt-6">
+          I also have a blog that I update once in a while – or whenever
+          inspiration strikes. Feel free to check it out
+          <a
+            href="https://khaled2049.github.io/"
+            target="_blank"
+            class="text-green-400 hover:underline"
+          >
+            my very occasionally updated blog</a
+          >.
+        </p>
+      </section>
+
+      <!-- Experience Section -->
+      <section id="experience" class="max-w-4xl mx-auto px-4 py-8 md:py-16">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8 gradient-text">
+          Experience
+        </h2>
+
+        <!-- Guild Education -->
+        <div
+          class="mb-6 md:mb-12 bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+        >
+          <div class="flex justify-between items-start mb-2 md:mb-4">
+            <div>
+              <h3 class="text-lg md:text-xl font-bold text-white">
+                Software Engineer II
+              </h3>
+              <p class="text-gray-400 text-sm md:text-base">
+                Guild Education - Denver, CO
+              </p>
+            </div>
+            <span class="text-gray-400 text-sm md:text-base"
+              >November 2024 - Present</span
             >
           </div>
-          <div>
-            <ul class="flex space-x-4">
-              <li>
-                <a href="index.html" class="hover:text-c-blue">Home</a>
-              </li>
-              <li>
-                <a href="/resume.html" class="hover:text-c-blue">Resume</a>
-              </li>
-              <li>
-                <a
-                  target="_blank"
-                  href="https://khaled2049.github.io/"
-                  class="hover:text-c-gray"
-                  >Blog</a
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container mx-auto bg-c-black px-4 py-8 flex-grow">
-      <div class="max-w-screen-lg mx-auto shadow-md">
-        <!-- Row with Two Columns -->
-        <div class="flex flex-col md:flex-row rounded-[10px]">
-          <!-- First Column (Left) -->
-          <div class="md:w-1/2 p-4">
-            <div class="relative bg-center h-[600px] max-w-[600px] my-10">
-              <!-- Image as Background -->
-              <div
-                class="absolute inset-0 bg-cover bg-center rounded-[50px]"
-                style="background-image: url('/public/profile.jpg')"
-              >
-                <div
-                  class="container mx-auto px-4 h-full flex items-center justify-center"
-                >
-                  <h1
-                    class="mb-80 text-2xl md:text-xl text-center p-2 font-bold mb-4 border-4 bg-blue-500"
-                  >
-                    Hey there,👋 I'm Khaled!
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Second Column (Right) -->
-          <div
-            class="md:w-1/2 p-4 mt-4 md:mt-0 md:ml-4 flex items-center justify-center"
+          <ul
+            class="list-disc list-inside text-gray-400 space-y-1 md:space-y-2 text-sm md:text-base"
           >
-            <!-- About Section -->
-            <section class="mt-8">
-              <h2 class="text-2xl font-bold mb-4 text-c-blue">Who am I?</h2>
-              <p>
-                A software engineer with a passion for React Native, AWS,
-                Machine Learning, and all things tech. When I'm not busy coding,
-                you'll often find me ⛷️, trekking through forests, or exploring
-                the great outdoors. Let's climb mountains and build dreams
-                together!
-              </p>
-            </section>
-          </div>
+            <li>
+              Just started so haven't done much yet, but I'm excited to work on
+              cool stuff here!
+            </li>
+          </ul>
         </div>
-      </div>
+        <!-- Koch Ag -->
+        <div
+          class="mb-6 md:mb-12 bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+        >
+          <div class="flex justify-between items-start mb-2 md:mb-4">
+            <div>
+              <h3 class="text-lg md:text-xl font-bold text-white">
+                Software Engineer
+              </h3>
+              <p class="text-gray-400 text-sm md:text-base">
+                Koch Ag & Energy Solutions, LLC - Wichita, KS
+              </p>
+            </div>
+            <span class="text-gray-400 text-sm md:text-base"
+              >March 2022 - November 2024</span
+            >
+          </div>
+          <ul
+            class="list-disc list-inside text-gray-400 space-y-1 md:space-y-2 text-sm md:text-base"
+          >
+            <li>
+              Updated legacy repositories using modern industry practices and
+              best patterns by utilizing TypeScript and the Serverless
+              Framework.
+            </li>
+            <li>
+              Integrated services with Salesforce using Node.js and TypeScript,
+              improving code quality.
+            </li>
+            <li>
+              Adopted the Serverless framework, cutting deployment times and
+              enhancing monitoring with AWS CloudWatch & Datadog.
+            </li>
+            <li>
+              Designed event-driven solutions with AWS EventBridge and Lambda,
+              boosting scalability.
+            </li>
+          </ul>
+        </div>
 
-      <section class="mt-20">
-        <h2 class="text-2xl font-bold mb-4 text-c-blue">Featured Projects</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-          <!-- Project 1 -->
+        <!-- OnPoint -->
+        <div
+          class="bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+        >
+          <div class="flex justify-between items-start mb-2 md:mb-4">
+            <div>
+              <h3 class="text-lg md:text-xl font-bold text-white">
+                Associate Software Developer
+              </h3>
+              <p class="text-gray-400 text-sm md:text-base">
+                OnPoint - KES - Wichita, KS
+              </p>
+            </div>
+            <span class="text-gray-400 text-sm md:text-base"
+              >May 2021 - March 2022</span
+            >
+          </div>
+          <ul
+            class="list-disc list-inside text-gray-400 space-y-1 md:space-y-2 text-sm md:text-base"
+          >
+            <li>
+              Developed full-stack applications using Vue.js, TypeScript, and
+              Python.
+            </li>
+            <li>Built dynamic tables to display data from DynamoDB.</li>
+            <li>
+              Collaborated in an agile team of 10, contributing to daily
+              stand-ups.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Education Section -->
+      <section id="education" class="max-w-4xl mx-auto px-4 py-8 md:py-16">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8 gradient-text">
+          Education
+        </h2>
+
+        <!-- Masters -->
+        <div
+          class="mb-6 md:mb-12 bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+        >
+          <div class="flex justify-between items-start mb-2 md:mb-4">
+            <div>
+              <h3 class="text-lg md:text-xl font-bold text-white">
+                Masters in Computer Science
+              </h3>
+              <p class="text-gray-400 text-sm md:text-base">
+                University of Colorado Boulder
+              </p>
+            </div>
+            <span class="text-gray-400 text-sm md:text-base">May 2024</span>
+          </div>
+          <p class="text-gray-400 text-sm md:text-base">
+            Advanced coursework in Machine Learning, Distributed Systems, and
+            Software Engineering
+          </p>
+        </div>
+
+        <!-- Bachelors -->
+        <div
+          class="bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+        >
+          <div class="flex justify-between items-start mb-2 md:mb-4">
+            <div>
+              <h3 class="text-lg md:text-xl font-bold text-white">
+                Bachelor of Computer Science
+              </h3>
+              <p class="text-gray-400 text-sm md:text-base">
+                Missouri State University
+              </p>
+            </div>
+            <span class="text-gray-400 text-sm md:text-base">May 2021</span>
+          </div>
+          <p class="text-gray-400 text-sm md:text-base">
+            Focus on Computer Science fundamentals, Data Structures, and
+            Algorithms
+          </p>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section id="projects" class="max-w-4xl mx-auto px-4 py-8 md:py-16">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8 gradient-text">
+          Projects
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <a
+            href="https://novel-sync.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div
+              class="bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+            >
+              <h3 class="text-lg md:text-xl font-bold text-white mb-2 md:mb-4">
+                Novel Sync
+              </h3>
+              <p class="text-gray-400 text-sm md:text-base mb-2 md:mb-4">
+                Built a novel writing app so good that it practically writes the
+                books for you—then stores them in the cloud with a lot of plot
+                twists.
+              </p>
+            </div>
+          </a>
+
           <a
             href="https://github.com/Khaled2049/all-out"
             target="_blank"
-            class="block"
+            rel="noopener noreferrer"
           >
-            <div class="bg-c-white p-4 shadow rounded h-full">
-              <h3 class="text-xl font-bold mb-2 text-c-red">AllOut</h3>
-              <div
-                class="relative bg-cover bg-center h-80 mt-8"
-                style="background-image: url('/public/splash.png')"
-              >
-                <div class="absolute inset-0 bg-c-gray opacity-50"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <div class="text-center text-white">
-                    <p class="text-lg md:text-xl"></p>
-                  </div>
-                </div>
-              </div>
-              <p class="text-stone-800">
-                An outdoor adventure app made using react-native and expo. The
-                goal was to enhance outdoor adventure experiences for users. For
-                hiking, camping, biking, and climbing. Features include ML
-                recommendation system and Graphql backend.
-              </p>
-            </div>
-          </a>
-
-          <!-- Project 2 -->
-          <a
-            href="https://github.com/Khaled2049/CSCI-4502-5502-Final-Project"
-            target="_blank"
-            class="block"
-          >
-            <div class="bg-c-white p-4 shadow rounded h-full">
-              <h3 class="text-xl font-bold mb-2 text-c-red">CourseCraft</h3>
-              <div
-                class="relative bg-cover bg-center h-80 mt-8"
-                style="background-image: url('/public/CourseCraft.png')"
-              >
-                <div class="absolute inset-0 bg-c-gray opacity-50"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <div class="text-center text-white">
-                    <p class="text-lg md:text-xl"></p>
-                  </div>
-                </div>
-              </div>
-              <p class="text-stone-800">
-                We used python, numpy and pandas to build a user-user and
-                item-user based collaborative filtering systems to try and
-                predict/recommend classes students can take in college.
-              </p>
-            </div>
-          </a>
-
-          <!-- ColonoReady -->
-          <a
-            href="https://funny-cendol-99e679.netlify.app"
-            target="_blank"
-            class="block"
-          >
-            <div class="bg-c-white p-4 shadow rounded h-full">
-              <h3 class="text-xl font-bold mb-2 text-c-red">ColonoReady</h3>
-              <div
-                class="relative bg-cover bg-center h-80 mt-8"
-                style="background-image: url('/public/ColonReady.png')"
-              >
-                <div class="absolute inset-0 bg-c-gray opacity-50"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <!-- Empty div for overlay -->
-                </div>
-              </div>
-              <p class="text-stone-800 p-2">
-                Simple App to generate Calendar Events built using React. It
-                allows users to schedule appointments for colonoscopy
-                procedures, selecting date, time, procedure option, and
-                optionally entering an email address for notifications.
-              </p>
-            </div>
-          </a>
-
-          <!-- Safe -->
-          <a href="https://github.com/Khaled2049/safe" target="_blank">
-            <div class="bg-c-white p-4 shadow rounded h-full">
-              <h3 class="text-xl font-bold mb-2 text-c-red">Safe</h3>
-              <div
-                class="relative bg-cover bg-center h-80 mt-8"
-                style="background-image: url('/public/safe.jpg')"
-              >
-                <div class="absolute inset-0 bg-c-gray opacity-50"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                  <div class="text-center text-white">
-                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Safe</h1>
-                  </div>
-                </div>
-              </div>
-              <p class="text-stone-800">
-                A command line interface application made using golang to store
-                secrets and passwords securely. It uses AES encryption to store
-                and retrieve secrets.
+            <div
+              class="bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+            >
+              <h3 class="text-lg md:text-xl font-bold text-white mb-2 md:mb-4">
+                All Out
+              </h3>
+              <p class="text-gray-400 text-sm md:text-base mb-2 md:mb-4">
+                Crafted an app that turns outdoor adventures into epic quests
+                for hiking, camping, biking, and climbing enthusiasts.
               </p>
             </div>
           </a>
         </div>
       </section>
-    </div>
-    <div class="mt-8 text-center">
-      <h3 class="text-xl font-bold mb-2 text-c-blue">
-        See more of my work...
-        <span
-          ><a
-            href="https://github.com/khaled2049"
-            class="text-c-red hover:underline"
-            >GitHub</a
-          ></span
-        >
-      </h3>
-    </div>
 
-    <!-- Footer -->
-    <footer class="bg-c-black text-white">
-      <div class="container mx-auto py-4 flex justify-center">
-        <div class="flex items-center space-x-8">
-          <!-- GitHub Link -->
-          <a
-            href="https://github.com/khaled2049"
-            class="hover:text-c-gray"
-            target="_blank"
+      <!-- Contact Section -->
+      <section id="contact" class="max-w-4xl mx-auto px-4 py-16 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6 gradient-text">
+          Contact Me
+        </h2>
+        <p class="text-gray-400 mb-8">
+          Feel free to reach out! I'm always open to new opportunities and
+          collaborations.
+        </p>
+
+        <form id="contactForm" class="space-y-4">
+          <!-- Name Field -->
+          <div>
+            <label for="name" class="sr-only">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your Name"
+              class="w-full px-4 py-3 rounded-md bg-gray-800 text-gray-200 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 outline-none"
+            />
+          </div>
+
+          <!-- Email Field -->
+          <div>
+            <label for="email" class="sr-only">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Your Email"
+              class="w-full px-4 py-3 rounded-md bg-gray-800 text-gray-200 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 outline-none"
+            />
+          </div>
+
+          <!-- Message Field -->
+          <div>
+            <label for="message" class="sr-only">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              placeholder="Your Message"
+              class="w-full px-4 py-3 rounded-md bg-gray-800 text-gray-200 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 outline-none"
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full px-4 py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-500 transition"
           >
-            <i class="fab fa-github-square text-4xl"></i>
-          </a>
-          <!-- LinkedIn Link -->
-          <a
-            href="https://www.linkedin.com/in/khaledhossainn/"
-            class="hover:text-c-gray"
-            target="_blank"
-          >
-            <i class="fab fa-linkedin text-4xl"></i>
-          </a>
-          <!-- Email Link -->
-          <a
-            href="mailto:khaledhossain.not@gmail.com"
-            class="hover:text-c-gray"
-          >
-            <i class="fas fa-envelope-square text-4xl"></i>
-          </a>
-        </div>
-      </div>
-    </footer>
+            Send Message
+          </button>
+        </form>
+      </section>
+
+      <!-- Footer -->
+      <footer
+        class="bg-dark-green border-t border-dark-green mt-16 px-4 py-8 text-center text-gray-400"
+      >
+        &copy; 2024 Khaled Hossain. All rights reserved.
+      </footer>
+    </div>
   </body>
 </html>
