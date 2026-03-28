@@ -1,513 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Khaled Hossain</title>
+    <title>Khaled Hossain — Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Share+Tech+Mono&display=swap"
       rel="stylesheet"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      /* Main body and text colors */
-      body {
-        font-family: "Fira Code", monospace;
-        background-color: #0a1a16;
-        color: #d1fae5;
-        overflow: hidden;
-        margin: 0;
-        padding: 0;
-        height: 100vh;
-        position: relative;
-      }
-
-      .gradient-text {
-        background: linear-gradient(45deg, #34d399, #10b981);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .bg-dark-green {
-        background-color: #0d3026;
-      }
-      .border-dark-green {
-        border-color: #14532d;
-      }
-      .hover-border-light-green:hover {
-        border-color: #34d399;
-      }
-
-      /* Starry background container */
-      .background-animation {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background-color: #0a1a16;
-        overflow: hidden;
-      }
-
-      /* Star style with green theme */
-      .star {
-        position: absolute;
-        width: 2px;
-        height: 2px;
-        background-color: rgba(
-          52,
-          211,
-          153,
-          0.8
-        ); /* Soft green color for stars */
-        border-radius: 50%;
-        opacity: 0.8;
-        animation: twinkle 2s infinite ease-in-out alternate,
-          moveStar 10s infinite linear;
-      }
-
-      /* Keyframes for star twinkling effect */
-      @keyframes twinkle {
-        0%,
-        100% {
-          transform: scale(1);
-          opacity: 0.8;
-        }
-        50% {
-          transform: scale(2);
-          opacity: 1;
-        }
-      }
-
-      /* Keyframes for random star movement */
-      @keyframes moveStar {
-        0% {
-          transform: translate(0, 0);
-        }
-        25% {
-          transform: translate(
-            calc(-30px + 60px * var(--randomX)),
-            calc(-30px + 60px * var(--randomY))
-          );
-        }
-        50% {
-          transform: translate(
-            calc(-60px + 120px * var(--randomX)),
-            calc(-60px + 120px * var(--randomY))
-          );
-        }
-        75% {
-          transform: translate(
-            calc(-30px + 60px * var(--randomX)),
-            calc(-30px + 60px * var(--randomY))
-          );
-        }
-        100% {
-          transform: translate(0, 0);
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="overflow-y-auto text-gray-300 relative">
-    <div class="background-animation"></div>
+  <body>
+    <!-- Grain overlay -->
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <nav id="nav">
+      <a href="#hero" class="nav-name">Khaled Hossain</a>
+      <div class="nav-links">
+        <a href="#work-experience">Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a
+          href="https://khaled2049.github.io/devlog"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Blog</a
+        >
+        <a href="#about">Me</a>
+      </div>
+      <button
+        class="nav-hamburger"
+        id="nav-hamburger"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile nav drawer -->
+    <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+      <a href="#work-experience">Work experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a
+        href="https://khaled2049.github.io/devlog"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Blog</a
+      >
+      <a href="#about">Me</a>
+    </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Star background animation
-        function createStar() {
-          const star = document.createElement("div");
-          star.classList.add("star");
+      (function () {
+        var btn = document.getElementById("nav-hamburger");
+        var drawer = document.getElementById("nav-drawer");
+        var open = false;
 
-          // Randomize the position of each star
-          star.style.top = `${Math.random() * 100}vh`;
-          star.style.left = `${Math.random() * 100}vw`;
-
-          // Randomize movement
-          star.style.setProperty("--randomX", Math.random());
-          star.style.setProperty("--randomY", Math.random());
-
-          document.querySelector(".background-animation").appendChild(star);
+        function setOpen(state) {
+          open = state;
+          btn.setAttribute("aria-expanded", open);
+          drawer.setAttribute("aria-hidden", !open);
+          btn.classList.toggle("is-open", open);
+          drawer.classList.toggle("is-open", open);
         }
 
-        // Generate multiple stars
-        for (let i = 0; i < 200; i++) {
-          createStar();
-        }
+        btn.addEventListener("click", function () {
+          setOpen(!open);
+        });
 
-        // Contact form email functionality
-        document
-          .getElementById("contactForm")
-          .addEventListener("submit", function (event) {
-            event.preventDefault(); // Prevent default form submission
-
-            // Get form values
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const message = document.getElementById("message").value;
-
-            // Construct the mailto link
-            const mailtoLink = `mailto:khaledhossain.dev@gmail.com?subject=Contact%20Form%20Submission%20from%20${encodeURIComponent(
-              name
-            )}&body=Name:%20${encodeURIComponent(
-              name
-            )}%0AEmail:%20${encodeURIComponent(
-              email
-            )}%0A%0AMessage:%0A${encodeURIComponent(message)}`;
-
-            // Open the mailto link
-            window.location.href = mailtoLink;
+        drawer.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", function () {
+            setOpen(false);
           });
-      });
+        });
+      })();
     </script>
 
-    <!-- Content Wrapper -->
-    <div class="relative z-10">
-      <!-- Hero Section -->
-      <header class="py-10 md:py-20 text-center px-4">
-        <h1 class="text-3xl md:text-5xl font-bold mb-2 md:mb-4">
-          Khaled Hossain
-        </h1>
-        <p class="text-lg md:text-xl text-gray-400">
-          Turning Coffee into Backend Code & Machine Learning Models
-        </p>
-        <!-- Social Links Section -->
-        <section id="social-links" class="max-w-4xl mx-auto px-4 pt-4">
-          <div class="flex justify-center space-x-6 text-gray-400">
-            <!-- GitHub -->
-            <a
-              href="https://github.com/Khaled2049"
-              target="_blank"
-              class="hover:text-green-400 transition"
-            >
-              <i class="fab fa-github fa-2x"></i>
-            </a>
+    <!-- Sections are injected here by main.js -->
+    <main id="page-content"></main>
 
-            <!-- Mail -->
-            <a
-              href="mailto:khaledhossain.dev@gmail.com"
-              class="hover:text-green-400 transition"
-            >
-              <i class="fas fa-envelope fa-2x"></i>
-            </a>
-
-            <!-- LinkedIn -->
-            <a
-              href="https://www.linkedin.com/in/khaledhossainn/"
-              target="_blank"
-              class="hover:text-green-400 transition"
-            >
-              <i class="fab fa-linkedin fa-2x"></i>
-            </a>
-          </div>
-        </section>
-      </header>
-
-      <!-- About Section -->
-      <section id="about" class="max-w-4xl mx-auto px-4 py-8 md:py-16">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8 gradient-text">
-          About Me
-        </h2>
-        <p class="text-gray-400 text-base md:text-lg leading-relaxed">
-          A software engineer with a passion for problem solving and all things
-          tech. When I'm not busy coding, you'll often find me ⛷️ hiking through
-          forests, or exploring the great outdoors. Let's climb mountains and
-          build dreams together!
-        </p>
-        <p class="text-gray-400 text-base md:text-lg leading-relaxed mt-6">
-          I also have a blog that I update once in a while – or whenever
-          inspiration strikes. Feel free to check it out
-          <a
-            href="https://khaled2049.github.io/"
-            target="_blank"
-            class="text-green-400 hover:underline"
-          >
-            my very occasionally updated blog</a
-          >.
-        </p>
-      </section>
-
-      <!-- Experience Section -->
-      <section id="experience" class="max-w-4xl mx-auto px-4 py-8 md:py-16">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8 gradient-text">
-          Experience
-        </h2>
-
-        <!-- Guild Education -->
-        <div
-          class="mb-6 md:mb-12 bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+    <!-- Footer -->
+    <footer>
+      <div class="footer-links">
+        <a
+          href="https://github.com/Khaled2049"
+          target="_blank"
+          rel="noopener noreferrer"
+          >GitHub</a
         >
-          <div class="flex justify-between items-start mb-2 md:mb-4">
-            <div>
-              <h3 class="text-lg md:text-xl font-bold text-white">
-                Software Engineer II
-              </h3>
-              <p class="text-gray-400 text-sm md:text-base">
-                Guild Education - Denver, CO
-              </p>
-            </div>
-            <span class="text-gray-400 text-sm md:text-base"
-              >November 2024 - Present</span
-            >
-          </div>
-          <ul
-            class="list-disc list-inside text-gray-400 space-y-1 md:space-y-2 text-sm md:text-base"
-          >
-            <li>
-              Upgraded and maintained PostgreSQL RDS, improving performance and
-              reliability.
-            </li>
-            <li>
-              Built automated tax reporting with TypeScript, Type ORM, AWS CDK,
-              and EventBridge which eliminated manual steps.
-            </li>
-            <li>
-              Set up Slack alerts for report mismatches to increase visibility
-              and speed up fixes.
-            </li>
-            <li>
-              Fixed critical bugs across backend systems, improving stability
-              and team efficiency.
-            </li>
-          </ul>
-        </div>
-        <!-- Koch Ag -->
-        <div
-          class="mb-6 md:mb-12 bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+        <a
+          href="https://www.linkedin.com/in/khaledhossainn/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LinkedIn</a
         >
-          <div class="flex justify-between items-start mb-2 md:mb-4">
-            <div>
-              <h3 class="text-lg md:text-xl font-bold text-white">
-                Software Engineer
-              </h3>
-              <p class="text-gray-400 text-sm md:text-base">
-                Koch Ag & Energy Solutions, LLC - Wichita, KS
-              </p>
-            </div>
-            <span class="text-gray-400 text-sm md:text-base"
-              >March 2022 - November 2024</span
-            >
-          </div>
-          <ul
-            class="list-disc list-inside text-gray-400 space-y-1 md:space-y-2 text-sm md:text-base"
-          >
-            <li>
-              Updated legacy repositories using modern industry practices and
-              best patterns by utilizing TypeScript and the Serverless
-              Framework.
-            </li>
-            <li>
-              Integrated services with Salesforce using Node.js and TypeScript,
-              improving code quality.
-            </li>
-            <li>
-              Adopted the Serverless framework, cutting deployment times and
-              enhancing monitoring with AWS CloudWatch & Datadog.
-            </li>
-            <li>
-              Designed event-driven solutions with AWS EventBridge and Lambda,
-              boosting scalability.
-            </li>
-          </ul>
-        </div>
-
-        <!-- OnPoint -->
-        <div
-          class="bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
+        <a
+          href="https://khaled2049.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Blog</a
         >
-          <div class="flex justify-between items-start mb-2 md:mb-4">
-            <div>
-              <h3 class="text-lg md:text-xl font-bold text-white">
-                Associate Software Developer
-              </h3>
-              <p class="text-gray-400 text-sm md:text-base">
-                OnPoint - KES - Wichita, KS
-              </p>
-            </div>
-            <span class="text-gray-400 text-sm md:text-base"
-              >May 2021 - March 2022</span
-            >
-          </div>
-          <ul
-            class="list-disc list-inside text-gray-400 space-y-1 md:space-y-2 text-sm md:text-base"
-          >
-            <li>
-              Developed full-stack applications using Vue.js, TypeScript, and
-              Python.
-            </li>
-            <li>Built dynamic tables to display data from DynamoDB.</li>
-            <li>
-              Collaborated in an agile team of 10, contributing to daily
-              stand-ups.
-            </li>
-          </ul>
-        </div>
-      </section>
+        <a href="mailto:khaledhossain.not@gmail.com">Email</a>
+      </div>
+    </footer>
 
-      <!-- Education Section -->
-      <section id="education" class="max-w-4xl mx-auto px-4 py-8 md:py-16">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8 gradient-text">
-          Education
-        </h2>
-
-        <!-- Masters -->
-        <div
-          class="mb-6 md:mb-12 bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
-        >
-          <div class="flex justify-between items-start mb-2 md:mb-4">
-            <div>
-              <h3 class="text-lg md:text-xl font-bold text-white">
-                Masters in Computer Science
-              </h3>
-              <p class="text-gray-400 text-sm md:text-base">
-                University of Colorado Boulder
-              </p>
-            </div>
-            <span class="text-gray-400 text-sm md:text-base">May 2024</span>
-          </div>
-          <p class="text-gray-400 text-sm md:text-base">
-            Advanced coursework in Machine Learning, Distributed Systems, and
-            Software Engineering
-          </p>
-        </div>
-
-        <!-- Bachelors -->
-        <div
-          class="bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
-        >
-          <div class="flex justify-between items-start mb-2 md:mb-4">
-            <div>
-              <h3 class="text-lg md:text-xl font-bold text-white">
-                Bachelor of Computer Science
-              </h3>
-              <p class="text-gray-400 text-sm md:text-base">
-                Missouri State University
-              </p>
-            </div>
-            <span class="text-gray-400 text-sm md:text-base">May 2021</span>
-          </div>
-          <p class="text-gray-400 text-sm md:text-base">
-            Focus on Computer Science fundamentals, Data Structures, and
-            Algorithms
-          </p>
-        </div>
-      </section>
-
-      <!-- Projects Section -->
-      <section id="projects" class="max-w-4xl mx-auto px-4 py-8 md:py-16">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-8 gradient-text">
-          Projects
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          <a
-            href="https://novel-sync.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div
-              class="bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
-            >
-              <h3 class="text-lg md:text-xl font-bold text-white mb-2 md:mb-4">
-                Novel Sync
-              </h3>
-              <p class="text-gray-400 text-sm md:text-base mb-2 md:mb-4">
-                Built a novel writing app so good that it practically writes the
-                books for you—then stores them in the cloud with a lot of plot
-                twists.
-              </p>
-            </div>
-          </a>
-
-          <a
-            href="https://github.com/Khaled2049/all-out"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div
-              class="bg-dark-green p-4 md:p-6 rounded-lg border border-dark-green hover-border-light-green transition"
-            >
-              <h3 class="text-lg md:text-xl font-bold text-white mb-2 md:mb-4">
-                All Out
-              </h3>
-              <p class="text-gray-400 text-sm md:text-base mb-2 md:mb-4">
-                Crafted an app that turns outdoor adventures into epic quests
-                for hiking, camping, biking, and climbing enthusiasts.
-              </p>
-            </div>
-          </a>
-        </div>
-      </section>
-
-      <!-- Contact Section -->
-      <section id="contact" class="max-w-4xl mx-auto px-4 py-16 text-center">
-        <h2 class="text-2xl md:text-3xl font-bold mb-6 gradient-text">
-          Contact Me
-        </h2>
-        <p class="text-gray-400 mb-8">
-          Feel free to reach out! I'm always open to new opportunities and
-          collaborations.
-        </p>
-
-        <form id="contactForm" class="space-y-4">
-          <!-- Name Field -->
-          <div>
-            <label for="name" class="sr-only">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Your Name"
-              class="w-full px-4 py-3 rounded-md bg-gray-800 text-gray-200 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 outline-none"
-            />
-          </div>
-
-          <!-- Email Field -->
-          <div>
-            <label for="email" class="sr-only">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Your Email"
-              class="w-full px-4 py-3 rounded-md bg-gray-800 text-gray-200 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 outline-none"
-            />
-          </div>
-
-          <!-- Message Field -->
-          <div>
-            <label for="message" class="sr-only">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              placeholder="Your Message"
-              class="w-full px-4 py-3 rounded-md bg-gray-800 text-gray-200 border border-gray-700 focus:border-green-400 focus:ring-2 focus:ring-green-400 outline-none"
-            ></textarea>
-          </div>
-
-          <!-- Submit Button -->
-          <button
-            type="submit"
-            class="w-full px-4 py-3 bg-green-600 text-white rounded-md font-semibold hover:bg-green-500 transition"
-          >
-            Send Message
-          </button>
-        </form>
-      </section>
-
-      <!-- Footer -->
-      <footer
-        class="bg-dark-green border-t border-dark-green mt-16 px-4 py-8 text-center text-gray-400"
-      >
-        &copy; 2024 Khaled Hossain. All rights reserved.
-      </footer>
-    </div>
+    <!-- Single Three.js instance shared by all modules and legacy global code -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import * as THREE from "three";
+      window.THREE = THREE;
+    </script>
+    <script src="main.js"></script>
   </body>
 </html>

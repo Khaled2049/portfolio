@@ -1,0 +1,764 @@
+/* ============================================================
+   VARIABLES
+============================================================ */
+:root {
+  --amber: #8ec07c;
+  --amber-dark: #282828;
+  --amber-mid: #427b58;
+  --olive: #98971a;
+  --olive-light: #928374;
+  --phosphor: #b8bb26;
+  --bg: #1d2021;
+  --bg-surface: #282828;
+  --paper: #ebdbb2;
+  --paper-dim: #d5c4a1;
+}
+
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 18px;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--paper);
+  font-family: "Libre Baskerville", serif;
+  line-height: 1.85;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--amber-dark);
+  color: var(--amber);
+}
+
+a {
+  color: var(--amber);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--paper);
+}
+
+ul {
+  list-style: none;
+}
+
+/* ============================================================
+   GRAIN OVERLAY
+============================================================ */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23g)' opacity='0.18'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+#nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.3rem 2.8rem;
+  transition:
+    background 0.35s ease,
+    border-bottom 0.35s ease;
+}
+
+#nav.scrolled {
+  background: rgba(29, 32, 33, 0.94);
+  border-bottom: 1px solid rgba(142, 192, 124, 0.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.nav-name {
+  font-family: "Special Elite", serif;
+  font-size: 1.05rem;
+  color: var(--paper);
+  letter-spacing: 0.04em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.2rem;
+}
+
+.nav-links a {
+  font-family: "Special Elite", serif;
+  font-size: 0.82rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.nav-links a:hover {
+  color: var(--amber);
+}
+
+/* ============================================================
+   HERO
+============================================================ */
+#hero {
+  position: relative;
+  height: 60vh;
+  min-height: 340px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 2.8rem 3.5rem;
+}
+
+#terrain-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.42;
+}
+
+.hero-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.065) 2px,
+    rgba(0, 0, 0, 0.065) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 860px;
+}
+
+.hero-name {
+  font-family: "Special Elite", serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  line-height: 0.93;
+  color: var(--paper);
+  letter-spacing: -0.01em;
+  margin-bottom: 1.2rem;
+}
+
+.hero-tagline {
+  font-family: "Libre Baskerville", serif;
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+  color: var(--paper-dim);
+  max-width: 520px;
+  line-height: 1.75;
+  margin-bottom: 1.1rem;
+}
+
+.hero-terminal {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.88rem;
+  color: var(--phosphor);
+  margin-bottom: 2.8rem;
+  opacity: 0.9;
+}
+
+.hero-arrow {
+  font-size: 1.4rem;
+  color: var(--amber);
+  animation: pulse-down 2.8s ease-in-out infinite;
+  display: inline-block;
+  line-height: 1;
+}
+
+@keyframes pulse-down {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(7px);
+  }
+}
+
+/* ============================================================
+   SECTION SHARED
+============================================================ */
+.section {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 6rem 2.8rem;
+}
+
+.section-title {
+  font-family: "Special Elite", serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: var(--amber);
+  line-height: 1;
+  margin-bottom: 3rem;
+  letter-spacing: -0.01em;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid rgba(142, 192, 124, 0.14);
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   ABOUT
+============================================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 5fr 8fr;
+  gap: 4.5rem;
+  align-items: start;
+}
+
+.about-pull-quote {
+  font-family: "Special Elite", serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+  color: var(--amber);
+  line-height: 1.5;
+  border-left: 2px solid var(--amber);
+  padding-left: 1.3rem;
+  position: sticky;
+  top: 7rem;
+}
+
+.about-body p {
+  color: var(--paper-dim);
+  margin-bottom: 1.3rem;
+  font-size: 0.97rem;
+}
+
+.about-body p:last-of-type {
+  margin-bottom: 0;
+}
+
+.about-contact {
+  margin-top: 1.8rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(142, 192, 124, 0.14);
+}
+
+.about-contact-label {
+  display: block;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--phosphor);
+  opacity: 0.75;
+  margin-bottom: 0.75rem;
+}
+
+.about-contact-links {
+  display: flex;
+  gap: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.about-contact-links a {
+  font-family: "Libre Baskerville", serif;
+  font-size: 0.9rem;
+  color: var(--paper-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(142, 192, 124, 0.35);
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.about-contact-links a:hover {
+  color: var(--amber);
+  text-decoration-color: var(--amber);
+}
+
+.ascii-mountains {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--olive-light);
+  line-height: 1.45;
+  margin-top: 2.8rem;
+  white-space: pre;
+  opacity: 0.65;
+  overflow: hidden;
+}
+
+/* ============================================================
+   FIELD NOTES (PROJECTS)
+============================================================ */
+.field-notes-list {
+  margin: 0;
+  padding: 0;
+}
+
+.field-note-item {
+  padding: 1.8rem 0;
+  border-bottom: 1px solid rgba(142, 192, 124, 0.13);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: start;
+}
+
+.field-note-item:first-child {
+  border-top: 1px solid rgba(142, 192, 124, 0.13);
+}
+
+.field-note-name {
+  display: block;
+  font-family: "Special Elite", serif;
+  font-size: 1.3rem;
+  color: var(--paper);
+  margin-bottom: 0.35rem;
+}
+
+.field-note-desc {
+  color: var(--paper-dim);
+  font-size: 0.93rem;
+  margin-bottom: 0.55rem;
+  max-width: 560px;
+}
+
+.field-note-tags {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.77rem;
+  color: var(--amber-mid);
+}
+
+.field-note-tags span {
+  margin-right: 0.45rem;
+}
+
+.field-note-link {
+  font-family: "Libre Baskerville", serif;
+  font-size: 0.88rem;
+  color: var(--amber);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+  align-self: center;
+}
+
+.field-note-link:hover {
+  color: var(--paper);
+}
+
+/* ============================================================
+   DISPATCHES
+============================================================ */
+.dispatches-header {
+  margin-top: 4.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.dispatches-title {
+  font-family: "Special Elite", serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--amber);
+  margin-bottom: 0.4rem;
+}
+
+.dispatches-label {
+  display: block;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--phosphor);
+  opacity: 0.75;
+  margin-bottom: 1.6rem;
+}
+
+.dispatch-list {
+  padding: 0;
+}
+
+.dispatch-item {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(142, 192, 124, 0.1);
+  display: flex;
+  align-items: baseline;
+  gap: 1.4rem;
+}
+
+.dispatch-date {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.79rem;
+  color: var(--olive-light);
+  min-width: 88px;
+  flex-shrink: 0;
+}
+
+.dispatch-title a {
+  color: var(--paper-dim);
+  font-size: 0.93rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: transparent;
+  transition:
+    text-decoration-color 0.2s,
+    color 0.2s;
+}
+
+.dispatch-title a:hover {
+  color: var(--paper);
+  text-decoration-color: var(--amber);
+}
+
+/* ============================================================
+   EXPEDITION LOG (EXPERIENCE) & TRAINING GROUNDS (EDUCATION)
+============================================================ */
+.expedition-entry {
+  margin-bottom: 0;
+}
+
+.expedition-year {
+  display: block;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--olive-light);
+  margin-bottom: 0.3rem;
+}
+
+.expedition-role {
+  font-family: "Special Elite", serif;
+  font-size: 1.45rem;
+  color: var(--paper);
+  margin-bottom: 0.15rem;
+  line-height: 1.2;
+}
+
+.expedition-company {
+  display: block;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.83rem;
+  color: var(--amber);
+  margin-bottom: 0.9rem;
+}
+
+.expedition-desc {
+  color: var(--paper-dim);
+  font-size: 0.93rem;
+}
+
+.expedition-desc li {
+  padding-left: 1.3rem;
+  position: relative;
+  margin-bottom: 0.3rem;
+}
+
+.expedition-desc li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--olive-light);
+}
+
+.entry-divider {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+  color: var(--olive);
+  letter-spacing: 0.22em;
+  margin: 2.8rem 0;
+  opacity: 0.55;
+}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer {
+  max-width: 1040px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(142, 192, 124, 0.14);
+  padding: 3.2rem 2.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2.2rem;
+}
+
+.footer-links a {
+  font-family: "Libre Baskerville", serif;
+  font-size: 0.9rem;
+  color: var(--paper-dim);
+}
+
+.footer-links a:hover {
+  color: var(--amber);
+}
+
+.footer-terminal {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--phosphor);
+  opacity: 0.65;
+}
+
+/* ============================================================
+   HAMBURGER BUTTON
+============================================================ */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--paper-dim);
+  border-radius: 1px;
+  transform-origin: center;
+  transition: transform 0.25s ease, opacity 0.2s ease, background 0.2s ease;
+}
+
+.nav-hamburger:hover span {
+  background: var(--amber);
+}
+
+.nav-hamburger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.nav-hamburger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ============================================================
+   MOBILE NAV DRAWER
+============================================================ */
+.nav-drawer {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  padding: 5rem 1.8rem 2rem;
+  background: rgba(29, 32, 33, 0.97);
+  border-bottom: 1px solid rgba(142, 192, 124, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  flex-direction: column;
+  gap: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.nav-drawer a {
+  font-family: "Special Elite", serif;
+  font-size: 1.1rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(142, 192, 124, 0.1);
+  display: block;
+  transition: color 0.2s, padding-left 0.2s;
+}
+
+.nav-drawer a:last-child {
+  border-bottom: none;
+}
+
+.nav-drawer a:hover {
+  color: var(--amber);
+  padding-left: 0.5rem;
+}
+
+.nav-drawer a::before {
+  content: '> ';
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.85rem;
+  color: var(--phosphor);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.nav-drawer a:hover::before {
+  opacity: 0.8;
+}
+
+.nav-drawer.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ============================================================
+   RESPONSIVE — 768px
+============================================================ */
+@media (max-width: 768px) {
+  #nav {
+    padding: 1rem 1.4rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-hamburger {
+    display: flex;
+  }
+
+  .nav-drawer {
+    display: flex;
+  }
+
+  #hero {
+    padding: 0 1.4rem 4rem;
+  }
+
+  .section {
+    padding: 4rem 1.4rem;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+  }
+
+  .about-pull-quote {
+    position: static;
+  }
+
+  .ascii-mountains {
+    font-size: 0.6rem;
+  }
+
+  .field-note-item {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .field-note-link {
+    align-self: start;
+  }
+
+  .dispatch-item {
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 1.6rem;
+    text-align: center;
+    padding: 2.5rem 1.4rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION
+============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-arrow {
+    animation: none;
+    opacity: 0.7;
+  }
+
+  #terrain-canvas {
+    display: none;
+  }
+}
+
+/* ============================================================
+   POWDER RUN
+============================================================ */
+#powder-run .section-lede {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  color: var(--olive-light);
+  letter-spacing: 0.08em;
+  margin-bottom: 1.8rem;
+}
+
+.powder-run-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(142, 192, 124, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  background: #1d2021;
+}
+
+.powder-run-frame canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
