@@ -135,8 +135,11 @@ const PEAK_FAR_RIGHT = 4.5; // distant foothill right
 const PEAK_FAR_LEFT = 2.5; // distant foothill left
 
 const RIDGE_HEIGHT_BASE = 3; // shortest possible ridge peak
-const RIDGE_HEIGHT_RANGE = 32; // random height added on top of base
-const RIDGE_JITTER = 6.0; // midpoint curve jitter between peaks
+const RIDGE_HEIGHT_RANGE = 12; // random height added on top of base
+const RIDGE_WAVE_AMP1 = 2; // large sine wave variation across each ridge
+const RIDGE_WAVE_AMP2 = 1; // small sine wave variation across each ridge
+const RIDGE_JITTER = 9.0; // midpoint curve jitter between peaks
+const RIDGE_Y_OFFSET = 3; // vertical baseline of the nearest ridge (lower = shorter silhouette)
 
 const TERRAIN_AMP_LARGE = 2.0; // large rolling waves
 const TERRAIN_AMP_DETAIL = 5.5; // fine surface detail
@@ -254,8 +257,8 @@ function initThreeEffects() {
       const h =
         RIDGE_HEIGHT_BASE +
         Math.random() * RIDGE_HEIGHT_RANGE +
-        Math.sin(t * Math.PI * 2.4 + Math.random()) * 8 +
-        Math.sin(t * Math.PI * 5 + Math.random() * 2) * 4;
+        Math.sin(t * Math.PI * 2.4 + Math.random()) * RIDGE_WAVE_AMP1 +
+        Math.sin(t * Math.PI * 5 + Math.random() * 2) * RIDGE_WAVE_AMP2;
       peaks.push({ x, y: yBottom + h });
     }
     shape.moveTo(-half, yBottom);
@@ -287,7 +290,7 @@ function initThreeEffects() {
 
   for (let r = 0; r < 3; r++) {
     const w = frustumWorldWidthAtZ(camera, ridgeZ[r]) * 1.08;
-    const yBottom = 2.5 + r * 0.6;
+    const yBottom = RIDGE_Y_OFFSET + r * 0.6;
     const peakCount = 12 + Math.floor(Math.random() * 7);
     const geo = new THREE.ShapeGeometry(buildRidgeShape(w, yBottom, peakCount));
     const mat = new THREE.MeshBasicMaterial({
@@ -578,7 +581,9 @@ function initThreeEffects() {
     );
     raycaster.setFromCamera(_mouseNDC, camera);
     const hits = raycaster.intersectObject(terrainMesh, false);
-    mouseTarget = hits.length ? { x: hits[0].point.x, z: hits[0].point.z } : null;
+    mouseTarget = hits.length
+      ? { x: hits[0].point.x, z: hits[0].point.z }
+      : null;
   });
 
   canvas.addEventListener("mouseleave", function () {
