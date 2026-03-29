@@ -204,7 +204,12 @@ function initThreeEffects() {
   const SEG = 58;
   const TERRAIN_WIDTH = 220; // horizontal span of the mesh
   const TERRAIN_DEPTH = 120; // front-to-back span of the mesh
-  const terrGeo = new THREE.PlaneGeometry(TERRAIN_WIDTH, TERRAIN_DEPTH, SEG, SEG);
+  const terrGeo = new THREE.PlaneGeometry(
+    TERRAIN_WIDTH,
+    TERRAIN_DEPTH,
+    SEG,
+    SEG,
+  );
   terrGeo.rotateX(-Math.PI / 2);
 
   const terrPos = terrGeo.attributes.position;
@@ -442,7 +447,18 @@ function initThreeEffects() {
     group.rotation.y = -Math.PI / 2;
 
     scene.add(group);
-    skiers.push({ group, x: startX, z: fixedZ, speed, wobble });
+    skiers.push({
+      group,
+      x: startX,
+      z: fixedZ,
+      speed,
+      wobble,
+      vx: 0.12 * speed, // initial velocity: moving right
+      vz: 0,
+      // each skier targets a slightly different point around the mouse so they spread out
+      offsetX: (Math.random() - 0.5) * 10,
+      offsetZ: (Math.random() - 0.5) * 8,
+    });
   }
 
   /* ----------------------------------------------------------
@@ -549,6 +565,27 @@ function initThreeEffects() {
   }
 
   /* ----------------------------------------------------------
+     MOUSE TARGET — skiers steer toward mouse position on terrain
+  ---------------------------------------------------------- */
+  let mouseTarget = null;
+  const _mouseNDC = new THREE.Vector2();
+
+  canvas.addEventListener("mousemove", function (e) {
+    const rect = canvas.getBoundingClientRect();
+    _mouseNDC.set(
+      ((e.clientX - rect.left) / rect.width) * 2 - 1,
+      -((e.clientY - rect.top) / rect.height) * 2 + 1,
+    );
+    raycaster.setFromCamera(_mouseNDC, camera);
+    const hits = raycaster.intersectObject(terrainMesh, false);
+    mouseTarget = hits.length ? { x: hits[0].point.x, z: hits[0].point.z } : null;
+  });
+
+  canvas.addEventListener("mouseleave", function () {
+    mouseTarget = null;
+  });
+
+  /* ----------------------------------------------------------
      ANIMATION LOOP
   ---------------------------------------------------------- */
   let rafId = null;
@@ -577,14 +614,40 @@ function initThreeEffects() {
 
     for (let si = 0; si < skiers.length; si++) {
       const sk = skiers[si];
+      const spd = 0.12 * sk.speed;
 
-      // move left → right
-      sk.x += 0.12 * sk.speed;
-      // slalom: gentle Z wobble
-      sk.z += Math.sin(timeOff * 0.55 + sk.wobble) * 0.014;
+      if (mouseTarget) {
+        // steer toward mouse target + per-skier scatter offset
+        const tx = mouseTarget.x + sk.offsetX;
+        const tz = mouseTarget.z + sk.offsetZ;
+        const dx = tx - sk.x;
+        const dz = tz - sk.z;
+        const dist = Math.sqrt(dx * dx + dz * dz);
+        if (dist > 1.0) {
+          const desiredVx = (dx / dist) * spd;
+          const desiredVz = (dz / dist) * spd;
+          sk.vx += (desiredVx - sk.vx) * 0.06;
+          sk.vz += (desiredVz - sk.vz) * 0.06;
+        } else {
+          // at the target: slow down and circle gently
+          sk.vx *= 0.92;
+          sk.vz *= 0.92;
+        }
+      } else {
+        // no mouse: steer back to default rightward movement
+        const defaultVx = spd;
+        const defaultVz = Math.sin(timeOff * 0.55 + sk.wobble) * 0.014;
+        sk.vx += (defaultVx - sk.vx) * 0.04;
+        sk.vz += (defaultVz - sk.vz) * 0.04;
+      }
 
-      // loop back to left when off screen right
-      if (sk.x > 58) sk.x = -58;
+      sk.x += sk.vx;
+      sk.z += sk.vz;
+
+      // wrap when drifting off the terrain edges
+      if (sk.x > 62) sk.x = -62;
+      if (sk.x < -62) sk.x = 62;
+      sk.z = Math.max(-58, Math.min(58, sk.z));
 
       // raycast current height
       raycaster.set(new THREE.Vector3(sk.x, 140, sk.z), down);
@@ -593,17 +656,21 @@ function initThreeEffects() {
         sk.group.position.set(sk.x, sh[0].point.y, sk.z);
       }
 
-      // slope pitch in X direction → tilt around Z
-      raycaster.set(new THREE.Vector3(sk.x + 0.4, 140, sk.z), down);
+      // slope pitch along direction of travel
+      const stepLen = Math.sqrt(sk.vx * sk.vx + sk.vz * sk.vz) * 4 + 0.3;
+      const nx = sk.x + (sk.vx / (stepLen || 1)) * stepLen;
+      const nz = sk.z + (sk.vz / (stepLen || 1)) * stepLen;
+      raycaster.set(new THREE.Vector3(nx, 140, nz), down);
       const sa = raycaster.intersectObject(terrainMesh, false);
       const slopeTilt =
         sa.length && sh.length
-          ? Math.atan2(sa[0].point.y - sh[0].point.y, 0.4)
+          ? Math.atan2(sa[0].point.y - sh[0].point.y, stepLen)
           : 0;
 
-      sk.group.rotation.y = -Math.PI / 2; // always face right
-      sk.group.rotation.z = slopeTilt; // lean with terrain slope
-      sk.group.rotation.x = Math.sin(timeOff * 0.55 + sk.wobble) * 0.12; // slalom lean
+      // face direction of travel
+      sk.group.rotation.y = Math.atan2(sk.vx, sk.vz) - Math.PI / 2;
+      sk.group.rotation.z = slopeTilt;
+      sk.group.rotation.x = Math.sin(timeOff * 0.55 + sk.wobble) * 0.12;
     }
 
     camera.position.x = 0;
