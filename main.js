@@ -117,6 +117,31 @@ async function loadSections() {
 })();
 
 /* ============================================================
+   MOUNTAIN HEIGHT CONSTANTS
+   ── Particle silhouette peaks (mountainProfile gaussians)
+      PEAK_*  = height of each gaussian summit
+   ── Ridge silhouettes (dark layered shapes behind terrain)
+      RIDGE_HEIGHT_BASE  = minimum peak height
+      RIDGE_HEIGHT_RANGE = random height added on top of base
+      RIDGE_JITTER       = extra midpoint jitter between peaks
+   ── Terrain mesh noise amplitude
+      TERRAIN_AMP_LARGE  = large-scale rolling hills amplitude
+      TERRAIN_AMP_DETAIL = fine-detail noise amplitude
+============================================================ */
+const PEAK_DOMINANT = 40.0; // tallest centre peak (particle silhouette)
+const PEAK_RIGHT = 32.0; // secondary peak to the right
+const PEAK_LEFT = 8.0; // secondary peak to the left
+const PEAK_FAR_RIGHT = 4.5; // distant foothill right
+const PEAK_FAR_LEFT = 2.5; // distant foothill left
+
+const RIDGE_HEIGHT_BASE = 3; // shortest possible ridge peak
+const RIDGE_HEIGHT_RANGE = 32; // random height added on top of base
+const RIDGE_JITTER = 6.0; // midpoint curve jitter between peaks
+
+const TERRAIN_AMP_LARGE = 2.0; // large rolling waves
+const TERRAIN_AMP_DETAIL = 5.5; // fine surface detail
+
+/* ============================================================
    MOUNTAIN PROFILE
    Returns the height (Y) of the ridge silhouette at a given
    world X position. Models a Colorado-style range: one dominant
@@ -124,11 +149,11 @@ async function loadSections() {
 ============================================================ */
 function mountainProfile(x) {
   return (
-    13.0 * Math.exp(-0.5 * Math.pow((x + 1.0) / 5.5, 2)) +
-    8.5 * Math.exp(-0.5 * Math.pow((x - 9.5) / 4.0, 2)) +
-    6.0 * Math.exp(-0.5 * Math.pow((x + 13.0) / 4.5, 2)) +
-    4.0 * Math.exp(-0.5 * Math.pow((x - 19.0) / 3.5, 2)) +
-    3.0 * Math.exp(-0.5 * Math.pow((x + 22.0) / 3.5, 2))
+    PEAK_DOMINANT * Math.exp(-0.5 * Math.pow((x + 1.0) / 5.5, 2)) +
+    PEAK_RIGHT * Math.exp(-0.5 * Math.pow((x - 9.5) / 4.0, 2)) +
+    PEAK_LEFT * Math.exp(-0.5 * Math.pow((x + 13.0) / 4.5, 2)) +
+    PEAK_FAR_RIGHT * Math.exp(-0.5 * Math.pow((x - 19.0) / 3.5, 2)) +
+    PEAK_FAR_LEFT * Math.exp(-0.5 * Math.pow((x + 22.0) / 3.5, 2))
   );
 }
 
@@ -177,7 +202,9 @@ function initThreeEffects() {
      TERRAIN MESH
   ---------------------------------------------------------- */
   const SEG = 58;
-  const terrGeo = new THREE.PlaneGeometry(120, 120, SEG, SEG);
+  const TERRAIN_WIDTH = 220; // horizontal span of the mesh
+  const TERRAIN_DEPTH = 120; // front-to-back span of the mesh
+  const terrGeo = new THREE.PlaneGeometry(TERRAIN_WIDTH, TERRAIN_DEPTH, SEG, SEG);
   terrGeo.rotateX(-Math.PI / 2);
 
   const terrPos = terrGeo.attributes.position;
@@ -193,8 +220,8 @@ function initThreeEffects() {
       const z = baseXZ[i * 2 + 1];
       terrPos.setY(
         i,
-        perlinNoise(x * 0.038, z * 0.038, t * 0.45) * 7.5 +
-          perlinNoise(x * 0.09, z * 0.09, t * 0.25) * 2.8,
+        perlinNoise(x * 0.038, z * 0.038, t * 0.45) * TERRAIN_AMP_LARGE +
+          perlinNoise(x * 0.09, z * 0.09, t * 0.25) * TERRAIN_AMP_DETAIL,
       );
     }
     terrPos.needsUpdate = true;
@@ -220,10 +247,10 @@ function initThreeEffects() {
       const t = n <= 1 ? 0 : i / (n - 1);
       const x = -half + t * width;
       const h =
-        7 +
-        Math.random() * 16 +
-        Math.sin(t * Math.PI * 2.4 + Math.random()) * 4 +
-        Math.sin(t * Math.PI * 5 + Math.random() * 2) * 2;
+        RIDGE_HEIGHT_BASE +
+        Math.random() * RIDGE_HEIGHT_RANGE +
+        Math.sin(t * Math.PI * 2.4 + Math.random()) * 8 +
+        Math.sin(t * Math.PI * 5 + Math.random() * 2) * 4;
       peaks.push({ x, y: yBottom + h });
     }
     shape.moveTo(-half, yBottom);
@@ -232,7 +259,7 @@ function initThreeEffects() {
       const p0 = peaks[i];
       const p1 = peaks[i + 1];
       const mx = (p0.x + p1.x) * 0.5;
-      const my = (p0.y + p1.y) * 0.5 + (Math.random() - 0.5) * 3.2;
+      const my = (p0.y + p1.y) * 0.5 + (Math.random() - 0.5) * RIDGE_JITTER;
       shape.quadraticCurveTo(mx, my, p1.x, p1.y);
     }
     shape.lineTo(half, yBottom);
@@ -333,6 +360,89 @@ function initThreeEffects() {
       tiltZ: tiltZ,
       index: trees.length,
     });
+  }
+
+  /* ----------------------------------------------------------
+     MINI SKIERS
+  ---------------------------------------------------------- */
+  const SKIER_SIZE = 2.0; // scale multiplier for all skier geometry
+  const SKIER_SPEED_MIN = 0.75; // slowest skier speed
+  const SKIER_SPEED_MAX = 1.25; // fastest skier speed
+
+  function createSkierMesh(jacketColor) {
+    const g = new THREE.Group();
+    const s = SKIER_SIZE;
+
+    const body = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.045 * s, 0.06 * s, 0.22 * s, 5),
+      new THREE.MeshBasicMaterial({ color: jacketColor }),
+    );
+    body.position.set(0, 0.11 * s, 0);
+
+    const head = new THREE.Mesh(
+      new THREE.DodecahedronGeometry(0.075 * s, 0),
+      new THREE.MeshBasicMaterial({ color: 0xd5c4a1 }),
+    );
+    head.position.set(0, 0.3 * s, 0);
+
+    const skiMat = new THREE.MeshBasicMaterial({ color: 0x8ec07c });
+    const skiL = new THREE.Mesh(
+      new THREE.BoxGeometry(0.06 * s, 0.018 * s, 0.38 * s),
+      skiMat,
+    );
+    skiL.position.set(-0.07 * s, -0.14 * s, 0);
+    const skiR = new THREE.Mesh(
+      new THREE.BoxGeometry(0.06 * s, 0.018 * s, 0.38 * s),
+      skiMat,
+    );
+    skiR.position.set(0.07 * s, -0.14 * s, 0);
+
+    const poleMat = new THREE.MeshBasicMaterial({ color: 0x928374 });
+    const poleL = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.008 * s, 0.008 * s, 0.28 * s, 3),
+      poleMat,
+    );
+    poleL.position.set(-0.12 * s, 0.04 * s, 0.06 * s);
+    poleL.rotation.z = 0.45;
+    poleL.rotation.x = -0.3;
+    const poleR = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.008 * s, 0.008 * s, 0.28 * s, 3),
+      poleMat,
+    );
+    poleR.position.set(0.12 * s, 0.04 * s, 0.06 * s);
+    poleR.rotation.z = -0.45;
+    poleR.rotation.x = -0.3;
+
+    g.add(body, head, skiL, skiR, poleL, poleR);
+    return g;
+  }
+
+  const SKIER_COUNT = 15;
+  const skiers = [];
+  const jacketColors = [
+    0xd5c4a1, 0xb8bb26, 0x8ec07c, 0xe06c75, 0xd3869b, 0xfe8019, 0x83a598,
+    0xfabd2f,
+  ];
+
+  for (let i = 0; i < SKIER_COUNT; i++) {
+    const group = createSkierMesh(jacketColors[i]);
+    // spread across different Z depths, all close enough to be clearly visible
+    const fixedZ = -5 + (i % 4) * 8;
+    // stagger starting X so they enter the scene at different times
+    const startX = -58 + i * 14;
+    const speed =
+      SKIER_SPEED_MIN + Math.random() * (SKIER_SPEED_MAX - SKIER_SPEED_MIN);
+    const wobble = Math.random() * Math.PI * 2;
+
+    raycaster.set(new THREE.Vector3(startX, 140, fixedZ), down);
+    const sh = raycaster.intersectObject(terrainMesh, false);
+    const startY = sh.length ? sh[0].point.y : 0;
+    group.position.set(startX, startY, fixedZ);
+    // face right (+X direction); skis are along local Z so rotate -90° around Y
+    group.rotation.y = -Math.PI / 2;
+
+    scene.add(group);
+    skiers.push({ group, x: startX, z: fixedZ, speed, wobble });
   }
 
   /* ----------------------------------------------------------
@@ -439,27 +549,6 @@ function initThreeEffects() {
   }
 
   /* ----------------------------------------------------------
-     MOUSE PARALLAX
-  ---------------------------------------------------------- */
-  let mouseX = 0,
-    mouseY = 0;
-  let lastClientXRidge = null;
-  let ridgeMouseDx = 0;
-  document.addEventListener("mousemove", function (e) {
-    let md = 0;
-    if (typeof e.movementX === "number") {
-      md = e.movementX;
-    } else if (lastClientXRidge !== null) {
-      md = e.clientX - lastClientXRidge;
-    }
-    lastClientXRidge = e.clientX;
-    ridgeMouseDx += md;
-
-    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
-
-  /* ----------------------------------------------------------
      ANIMATION LOOP
   ---------------------------------------------------------- */
   let rafId = null;
@@ -474,15 +563,6 @@ function initThreeEffects() {
     terrGeo.computeBoundingSphere();
     updateParticles(particleScrollT);
 
-    const dRidge = ridgeMouseDx;
-    ridgeMouseDx = 0;
-    const ridgeDeltaScale = 0.24;
-    for (let ri = 0; ri < ridgeGroups.length; ri++) {
-      const rg = ridgeGroups[ri];
-      const targetX = dRidge * ridgeDeltaScale * rg.k;
-      rg.group.position.x += (targetX - rg.group.position.x) * 0.16;
-    }
-
     for (let ti = 0; ti < trees.length; ti++) {
       const tr = trees[ti];
       raycaster.set(new THREE.Vector3(tr.x, 140, tr.z), down);
@@ -495,8 +575,39 @@ function initThreeEffects() {
         tr.tiltZ + Math.sin(timeOff * 0.6 + tr.index * 0.9) * 0.018;
     }
 
-    camera.position.x += (mouseX * 4.5 - camera.position.x) * 0.028;
-    camera.position.y += (30.0 - mouseY * 2.5 - camera.position.y) * 0.028;
+    for (let si = 0; si < skiers.length; si++) {
+      const sk = skiers[si];
+
+      // move left → right
+      sk.x += 0.12 * sk.speed;
+      // slalom: gentle Z wobble
+      sk.z += Math.sin(timeOff * 0.55 + sk.wobble) * 0.014;
+
+      // loop back to left when off screen right
+      if (sk.x > 58) sk.x = -58;
+
+      // raycast current height
+      raycaster.set(new THREE.Vector3(sk.x, 140, sk.z), down);
+      const sh = raycaster.intersectObject(terrainMesh, false);
+      if (sh.length) {
+        sk.group.position.set(sk.x, sh[0].point.y, sk.z);
+      }
+
+      // slope pitch in X direction → tilt around Z
+      raycaster.set(new THREE.Vector3(sk.x + 0.4, 140, sk.z), down);
+      const sa = raycaster.intersectObject(terrainMesh, false);
+      const slopeTilt =
+        sa.length && sh.length
+          ? Math.atan2(sa[0].point.y - sh[0].point.y, 0.4)
+          : 0;
+
+      sk.group.rotation.y = -Math.PI / 2; // always face right
+      sk.group.rotation.z = slopeTilt; // lean with terrain slope
+      sk.group.rotation.x = Math.sin(timeOff * 0.55 + sk.wobble) * 0.12; // slalom lean
+    }
+
+    camera.position.x = 0;
+    camera.position.y = 30;
     camera.position.z = 55;
     camera.lookAt(0, -3, 0);
 
