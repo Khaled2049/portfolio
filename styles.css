@@ -82,9 +82,15 @@ ul {
   justify-content: space-between;
   align-items: center;
   padding: 1.3rem 2.8rem;
+  /* Let clicks pass through the bar so the hero canvas (moon/sun) stays clickable */
+  pointer-events: none;
   transition:
     background 0.35s ease,
     border-bottom 0.35s ease;
+}
+
+#nav > * {
+  pointer-events: auto;
 }
 
 #nav.scrolled {

@@ -144,12 +144,19 @@ const RIDGE_Y_OFFSET = 3; // vertical baseline of the nearest ridge (lower = sho
 const TERRAIN_AMP_LARGE = 2.0; // large rolling waves
 const TERRAIN_AMP_DETAIL = 5.5; // fine surface detail
 
-const MOON_RADIUS = 5.0;     // size of the moon disc
-const MOON_X     = 0;        // horizontal position (0 = center)
-const MOON_Y     = 22;       // height above horizon
-const MOON_Z     = -28;      // depth behind ridges (ridges are at -18, -13, -8)
+const MOON_RADIUS = 5.0; // size of the moon disc
+const MOON_X = 0; // horizontal position (0 = center)
+const MOON_Y = 22; // height above horizon
+const MOON_Z = -28; // depth behind ridges (ridges are at -18, -13, -8)
 const MOON_COLOR = 0xfbf1c7; // warm cream disc
 const MOON_HALO_SCALE = 1.6; // halo size relative to moon radius
+const MOON_ORBIT_RANGE = 38; // how far left/right the moon travels
+const MOON_ORBIT_SPEED = 2; // angular speed — full arc ~every 1 min
+/** cos²(phase) peaks when the body crosses the middle of the arc — dip Y into the ridge band */
+const MOON_BEHIND_DIP = 17;
+/** tuck slightly farther in Z while “behind” so depth + silhouette line up */
+const MOON_BEHIND_Z_PULL = 8;
+const SUN_COLOR = 0xfabd2f; // warm yellow when toggled to sun
 
 /* ============================================================
    MOUNTAIN PROFILE
@@ -345,10 +352,43 @@ function initThreeEffects() {
     moonMat,
   );
 
+  // sun rays (hidden until toggled)
+  const rayCount = 12;
+  const rayVerts = [];
+  for (let i = 0; i < rayCount; i++) {
+    const a = (i / rayCount) * Math.PI * 2;
+    rayVerts.push(
+      Math.cos(a) * MOON_RADIUS * 1.35,
+      Math.sin(a) * MOON_RADIUS * 1.35,
+      0,
+      Math.cos(a) * MOON_RADIUS * 2.2,
+      Math.sin(a) * MOON_RADIUS * 2.2,
+      0,
+    );
+  }
+  const rayGeo = new THREE.BufferGeometry();
+  rayGeo.setAttribute(
+    "position",
+    new THREE.BufferAttribute(new Float32Array(rayVerts), 3),
+  );
+  const rayMat = new THREE.LineBasicMaterial({
+    color: SUN_COLOR,
+    fog: false,
+    transparent: true,
+    opacity: 0,
+  });
+  const sunRays = new THREE.LineSegments(rayGeo, rayMat);
+  moonGroup.add(sunRays);
+
   moonGroup.add(haloMesh);
   moonGroup.add(moonMesh);
   moonGroup.position.set(MOON_X, MOON_Y, MOON_Z);
   scene.add(moonGroup);
+
+  const moonClickTargets = [moonMesh, haloMesh];
+
+  let isSun = false;
+  let lastOrbitCycle = 0;
 
   /* ----------------------------------------------------------
      LOW-POLY PINE TREES (raycast to terrain)
@@ -621,6 +661,8 @@ function initThreeEffects() {
       -((e.clientY - rect.top) / rect.height) * 2 + 1,
     );
     raycaster.setFromCamera(_mouseNDC, camera);
+    const moonHover = raycaster.intersectObjects(moonClickTargets, false);
+    canvas.style.cursor = moonHover.length ? "pointer" : "default";
     const hits = raycaster.intersectObject(terrainMesh, false);
     mouseTarget = hits.length
       ? { x: hits[0].point.x, z: hits[0].point.z }
@@ -702,6 +744,20 @@ function initThreeEffects() {
       -((e.clientY - rect.top) / rect.height) * 2 + 1,
     );
     raycaster.setFromCamera(_mouseNDC, camera);
+
+    // moon/sun toggle takes priority (halo included — easier to hit than the disc alone)
+    const moonHits = raycaster.intersectObjects(moonClickTargets, false);
+    if (moonHits.length) {
+      isSun = !isSun;
+      const c = isSun ? SUN_COLOR : MOON_COLOR;
+      moonMat.color.setHex(c);
+      haloMat.color.setHex(c);
+      haloMat.opacity = isSun ? 0.28 : 0.12;
+      rayMat.opacity = isSun ? 0.85 : 0;
+      return;
+    }
+
+    // otherwise launch a firework on the terrain
     const hits = raycaster.intersectObject(terrainMesh, false);
     if (hits.length) {
       const p = hits[0].point;
@@ -823,6 +879,27 @@ function initThreeEffects() {
       }
       fw.geo.attributes.position.needsUpdate = true;
     }
+
+    // Orbit: high near left/right horizons, dips behind ridge silhouettes at center, then rises again
+    const orbitPhase = timeOff * MOON_ORBIT_SPEED;
+    const behind = Math.pow(Math.cos(orbitPhase), 2);
+    moonGroup.position.x =
+      MOON_X + Math.sin(orbitPhase) * MOON_ORBIT_RANGE;
+    moonGroup.position.y = MOON_Y - behind * MOON_BEHIND_DIP;
+    moonGroup.position.z = MOON_Z - behind * MOON_BEHIND_Z_PULL;
+    // toggle moon/sun after each completed orbit
+    const currentCycle = Math.floor(orbitPhase / (2 * Math.PI));
+    if (currentCycle !== lastOrbitCycle) {
+      lastOrbitCycle = currentCycle;
+      isSun = !isSun;
+      const c = isSun ? SUN_COLOR : MOON_COLOR;
+      moonMat.color.setHex(c);
+      haloMat.color.setHex(c);
+      haloMat.opacity = isSun ? 0.28 : 0.12;
+      rayMat.opacity = isSun ? 0.85 : 0;
+    }
+    // slowly rotate sun rays
+    if (isSun) sunRays.rotation.z += 0.003;
 
     camera.position.x = 0;
     camera.position.y = 30;
