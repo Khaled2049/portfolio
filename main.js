@@ -144,6 +144,13 @@ const RIDGE_Y_OFFSET = 3; // vertical baseline of the nearest ridge (lower = sho
 const TERRAIN_AMP_LARGE = 2.0; // large rolling waves
 const TERRAIN_AMP_DETAIL = 5.5; // fine surface detail
 
+const MOON_RADIUS = 5.0;     // size of the moon disc
+const MOON_X     = 0;        // horizontal position (0 = center)
+const MOON_Y     = 22;       // height above horizon
+const MOON_Z     = -28;      // depth behind ridges (ridges are at -18, -13, -8)
+const MOON_COLOR = 0xfbf1c7; // warm cream disc
+const MOON_HALO_SCALE = 1.6; // halo size relative to moon radius
+
 /* ============================================================
    MOUNTAIN PROFILE
    Returns the height (Y) of the ridge silhouette at a given
@@ -308,6 +315,40 @@ function initThreeEffects() {
   }
 
   scene.add(terrainMesh);
+
+  /* ----------------------------------------------------------
+     MOON
+  ---------------------------------------------------------- */
+  const moonGroup = new THREE.Group();
+
+  // soft halo behind the disc
+  const haloMat = new THREE.MeshBasicMaterial({
+    color: MOON_COLOR,
+    transparent: true,
+    opacity: 0.12,
+    fog: false,
+    depthWrite: false,
+  });
+  const haloMesh = new THREE.Mesh(
+    new THREE.CircleGeometry(MOON_RADIUS * MOON_HALO_SCALE, 48),
+    haloMat,
+  );
+  haloMesh.position.z = -0.1;
+
+  // solid moon disc
+  const moonMat = new THREE.MeshBasicMaterial({
+    color: MOON_COLOR,
+    fog: false,
+  });
+  const moonMesh = new THREE.Mesh(
+    new THREE.CircleGeometry(MOON_RADIUS, 48),
+    moonMat,
+  );
+
+  moonGroup.add(haloMesh);
+  moonGroup.add(moonMesh);
+  moonGroup.position.set(MOON_X, MOON_Y, MOON_Z);
+  scene.add(moonGroup);
 
   /* ----------------------------------------------------------
      LOW-POLY PINE TREES (raycast to terrain)
@@ -591,6 +632,84 @@ function initThreeEffects() {
   });
 
   /* ----------------------------------------------------------
+     FIREWORKS
+  ---------------------------------------------------------- */
+  const fireworks = [];
+  const FW_PARTICLE_COUNT = 90;
+  const FW_COLORS = [
+    0xfabd2f, 0xfe8019, 0xfb4934, 0xb8bb26, 0x8ec07c, 0x83a598, 0xd3869b,
+    0xebdbb2,
+  ];
+
+  /* shared soft-circle glow texture (same technique as particle constellation) */
+  const fwGlowCanvas = document.createElement("canvas");
+  fwGlowCanvas.width = fwGlowCanvas.height = 32;
+  const fwGlowCtx = fwGlowCanvas.getContext("2d");
+  const fwGrd = fwGlowCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+  fwGrd.addColorStop(0, "rgba(255,255,255,1.0)");
+  fwGrd.addColorStop(0.4, "rgba(255,255,255,0.6)");
+  fwGrd.addColorStop(1, "rgba(255,255,255,0.0)");
+  fwGlowCtx.fillStyle = fwGrd;
+  fwGlowCtx.fillRect(0, 0, 32, 32);
+  const fwGlowTex = new THREE.CanvasTexture(fwGlowCanvas);
+
+  function launchFirework(x, y, z) {
+    const color = FW_COLORS[Math.floor(Math.random() * FW_COLORS.length)];
+    const positions = new Float32Array(FW_PARTICLE_COUNT * 3);
+    const particles = [];
+
+    for (let i = 0; i < FW_PARTICLE_COUNT; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      const spd = 0.18 + Math.random() * 0.28;
+      particles.push({
+        x,
+        y,
+        z,
+        vx: Math.sin(phi) * Math.cos(theta) * spd,
+        vy: Math.abs(Math.sin(phi) * Math.sin(theta)) * spd + 0.08, // bias upward on burst
+        vz: Math.cos(phi) * spd,
+      });
+      positions[i * 3] = x;
+      positions[i * 3 + 1] = y;
+      positions[i * 3 + 2] = z;
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+    const mat = new THREE.PointsMaterial({
+      color,
+      size: 0.55,
+      map: fwGlowTex,
+      transparent: true,
+      opacity: 1.0,
+      alphaTest: 0.005,
+      sizeAttenuation: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const points = new THREE.Points(geo, mat);
+    scene.add(points);
+    fireworks.push({ points, geo, mat, particles, life: 1.0 });
+  }
+
+  canvas.addEventListener("click", function (e) {
+    const rect = canvas.getBoundingClientRect();
+    _mouseNDC.set(
+      ((e.clientX - rect.left) / rect.width) * 2 - 1,
+      -((e.clientY - rect.top) / rect.height) * 2 + 1,
+    );
+    raycaster.setFromCamera(_mouseNDC, camera);
+    const hits = raycaster.intersectObject(terrainMesh, false);
+    if (hits.length) {
+      const p = hits[0].point;
+      launchFirework(p.x, p.y + 2, p.z);
+    }
+  });
+
+  /* ----------------------------------------------------------
      ANIMATION LOOP
   ---------------------------------------------------------- */
   let rafId = null;
@@ -676,6 +795,33 @@ function initThreeEffects() {
       sk.group.rotation.y = Math.atan2(sk.vx, sk.vz) - Math.PI / 2;
       sk.group.rotation.z = slopeTilt;
       sk.group.rotation.x = Math.sin(timeOff * 0.55 + sk.wobble) * 0.12;
+    }
+
+    for (let fi = fireworks.length - 1; fi >= 0; fi--) {
+      const fw = fireworks[fi];
+      fw.life -= 0.016;
+      if (fw.life <= 0) {
+        scene.remove(fw.points);
+        fw.geo.dispose();
+        fw.mat.dispose();
+        fireworks.splice(fi, 1);
+        continue;
+      }
+      fw.mat.opacity = fw.life * fw.life; // quadratic fade
+      const pos = fw.geo.attributes.position.array;
+      for (let i = 0; i < fw.particles.length; i++) {
+        const p = fw.particles[i];
+        p.vy -= 0.012; // gravity
+        p.vx *= 0.97; // drag
+        p.vz *= 0.97;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.z += p.vz;
+        pos[i * 3] = p.x;
+        pos[i * 3 + 1] = p.y;
+        pos[i * 3 + 2] = p.z;
+      }
+      fw.geo.attributes.position.needsUpdate = true;
     }
 
     camera.position.x = 0;
