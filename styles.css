@@ -124,6 +124,18 @@ ul {
   color: var(--amber);
 }
 
+.nav-resume-link {
+  border: 1px solid var(--amber);
+  padding: 0.2rem 0.7rem;
+  color: var(--amber) !important;
+  border-radius: 2px;
+}
+
+.nav-resume-link:hover {
+  background: var(--amber);
+  color: var(--bg) !important;
+}
+
 /* ============================================================
    HERO
 ============================================================ */
@@ -391,65 +403,6 @@ ul {
   color: var(--paper);
 }
 
-/* ============================================================
-   DISPATCHES
-============================================================ */
-.dispatches-header {
-  margin-top: 4.5rem;
-  margin-bottom: 0.4rem;
-}
-
-.dispatches-title {
-  font-family: "Special Elite", serif;
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  color: var(--amber);
-  margin-bottom: 0.4rem;
-}
-
-.dispatches-label {
-  display: block;
-  font-family: "Share Tech Mono", monospace;
-  font-size: 0.8rem;
-  color: var(--phosphor);
-  opacity: 0.75;
-  margin-bottom: 1.6rem;
-}
-
-.dispatch-list {
-  padding: 0;
-}
-
-.dispatch-item {
-  padding: 0.85rem 0;
-  border-bottom: 1px solid rgba(142, 192, 124, 0.1);
-  display: flex;
-  align-items: baseline;
-  gap: 1.4rem;
-}
-
-.dispatch-date {
-  font-family: "Share Tech Mono", monospace;
-  font-size: 0.79rem;
-  color: var(--olive-light);
-  min-width: 88px;
-  flex-shrink: 0;
-}
-
-.dispatch-title a {
-  color: var(--paper-dim);
-  font-size: 0.93rem;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: transparent;
-  transition:
-    text-decoration-color 0.2s,
-    color 0.2s;
-}
-
-.dispatch-title a:hover {
-  color: var(--paper);
-  text-decoration-color: var(--amber);
-}
 
 /* ============================================================
    EXPEDITION LOG (EXPERIENCE) & TRAINING GROUNDS (EDUCATION)
@@ -700,12 +653,7 @@ footer {
     align-self: start;
   }
 
-  .dispatch-item {
-    flex-wrap: wrap;
-    gap: 0.3rem;
-  }
-
-  footer {
+footer {
     flex-direction: column;
     gap: 1.6rem;
     text-align: center;
