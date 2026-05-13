@@ -28,11 +28,24 @@ import {
 } from "./constants.js";
 
 export function initThreeEffects(scrollState) {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const loadingEl = document.getElementById("hero-loading");
+  function dismissHeroLoading() {
+    if (!loadingEl || loadingEl.classList.contains("is-hidden")) return;
+    loadingEl.classList.add("is-hidden");
+    loadingEl.setAttribute("aria-busy", "false");
+  }
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    dismissHeroLoading();
+    return;
+  }
 
   const canvas = document.getElementById("terrain-canvas");
   const heroSection = document.getElementById("hero");
-  if (!canvas || !heroSection) return;
+  if (!canvas || !heroSection) {
+    dismissHeroLoading();
+    return;
+  }
 
   /* ---- Renderer ---- */
   const renderer = new THREE.WebGLRenderer({
@@ -613,6 +626,7 @@ export function initThreeEffects(scrollState) {
   let rafId = null;
   let running = false;
   let timeOff = 0;
+  let heroLoadDismissed = false;
 
   function animate() {
     rafId = requestAnimationFrame(animate);
@@ -749,6 +763,10 @@ export function initThreeEffects(scrollState) {
     camera.lookAt(0, -3, 0);
 
     renderer.render(scene, camera);
+    if (!heroLoadDismissed) {
+      heroLoadDismissed = true;
+      dismissHeroLoading();
+    }
   }
 
   function start() {

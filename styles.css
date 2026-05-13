@@ -171,6 +171,63 @@ ul {
   z-index: 2;
 }
 
+.hero-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(29, 32, 33, 0.72);
+  pointer-events: none;
+  transition:
+    opacity 0.55s ease,
+    visibility 0.55s ease;
+}
+
+.hero-loading.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hero-loading-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hero-loading-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid rgba(142, 192, 124, 0.2);
+  border-top-color: var(--amber);
+  border-radius: 50%;
+  animation: hero-spin 0.85s linear infinite;
+}
+
+.hero-loading-text {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--phosphor);
+  opacity: 0.9;
+}
+
+@keyframes hero-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-loading-spinner {
+    animation: none;
+    border-top-color: rgba(142, 192, 124, 0.45);
+  }
+}
+
 .hero-content {
   position: relative;
   z-index: 3;
@@ -282,8 +339,6 @@ ul {
   line-height: 1.5;
   border-left: 2px solid var(--amber);
   padding-left: 1.3rem;
-  position: sticky;
-  top: 7rem;
 }
 
 .about-body p {
@@ -634,10 +689,6 @@ footer {
   .about-grid {
     grid-template-columns: 1fr;
     gap: 2.2rem;
-  }
-
-  .about-pull-quote {
-    position: static;
   }
 
   .ascii-mountains {
