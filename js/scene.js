@@ -27,23 +27,26 @@ import {
   mountainProfile,
 } from "./constants.js";
 
-export function initThreeEffects(scrollState) {
-  const loadingEl = document.getElementById("hero-loading");
-  function dismissHeroLoading() {
-    if (!loadingEl || loadingEl.classList.contains("is-hidden")) return;
-    loadingEl.classList.add("is-hidden");
-    loadingEl.setAttribute("aria-busy", "false");
+/* `onReady` fires once the hero is done settling — after the first rendered
+   frame, or immediately when the scene is skipped. The caller uses it to
+   drop the boot overlay. */
+export function initThreeEffects(scrollState, onReady) {
+  let readyFired = false;
+  function signalReady() {
+    if (readyFired) return;
+    readyFired = true;
+    if (typeof onReady === "function") onReady();
   }
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    dismissHeroLoading();
+    signalReady();
     return;
   }
 
   const canvas = document.getElementById("terrain-canvas");
   const heroSection = document.getElementById("hero");
   if (!canvas || !heroSection) {
-    dismissHeroLoading();
+    signalReady();
     return;
   }
 
@@ -626,7 +629,6 @@ export function initThreeEffects(scrollState) {
   let rafId = null;
   let running = false;
   let timeOff = 0;
-  let heroLoadDismissed = false;
 
   function animate() {
     rafId = requestAnimationFrame(animate);
@@ -763,10 +765,7 @@ export function initThreeEffects(scrollState) {
     camera.lookAt(0, -3, 0);
 
     renderer.render(scene, camera);
-    if (!heroLoadDismissed) {
-      heroLoadDismissed = true;
-      dismissHeroLoading();
-    }
+    signalReady();
   }
 
   function start() {

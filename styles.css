@@ -141,12 +141,13 @@ ul {
 ============================================================ */
 #hero {
   position: relative;
-  height: 60vh;
-  min-height: 340px;
+  /* Grows past 60vh rather than tucking content under the fixed nav
+     on short viewports */
+  min-height: max(60vh, 340px);
   overflow: hidden;
   display: flex;
   align-items: flex-end;
-  padding: 0 2.8rem 3.5rem;
+  padding: 6.5rem 2.8rem 3.5rem;
 }
 
 #terrain-canvas {
@@ -171,42 +172,55 @@ ul {
   z-index: 2;
 }
 
-.hero-loading {
-  position: absolute;
+/* ============================================================
+   BOOT LOADER
+   Covers the page until the injected sections and the hero's
+   Three.js scene are ready, so nav / hero never jump into place.
+============================================================ */
+.boot-loader {
+  position: fixed;
   inset: 0;
-  z-index: 2;
+  z-index: 9998; /* under the grain overlay so the loader keeps the film texture */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(29, 32, 33, 0.72);
+  background: var(--bg);
   pointer-events: none;
-  transition:
-    opacity 0.55s ease,
-    visibility 0.55s ease;
-}
-
-.hero-loading.is-hidden {
   opacity: 0;
   visibility: hidden;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
 }
 
-.hero-loading-inner {
+html.is-booting .boot-loader {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Freeze the page behind the overlay while it is up */
+html.is-booting,
+html.is-booting body {
+  overflow: hidden;
+}
+
+.boot-loader-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
 }
 
-.hero-loading-spinner {
+.boot-loader-spinner {
   width: 2rem;
   height: 2rem;
   border: 2px solid rgba(142, 192, 124, 0.2);
   border-top-color: var(--amber);
   border-radius: 50%;
-  animation: hero-spin 0.85s linear infinite;
+  animation: boot-spin 0.85s linear infinite;
 }
 
-.hero-loading-text {
+.boot-loader-text {
   font-family: "Share Tech Mono", monospace;
   font-size: 0.78rem;
   letter-spacing: 0.14em;
@@ -215,14 +229,14 @@ ul {
   opacity: 0.9;
 }
 
-@keyframes hero-spin {
+@keyframes boot-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-loading-spinner {
+  .boot-loader-spinner {
     animation: none;
     border-top-color: rgba(142, 192, 124, 0.45);
   }
@@ -257,8 +271,46 @@ ul {
   font-family: "Share Tech Mono", monospace;
   font-size: 0.88rem;
   color: var(--phosphor);
-  margin-bottom: 2.8rem;
+  margin-bottom: 1.5rem;
   opacity: 0.9;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.1rem;
+  margin-bottom: 2.4rem;
+}
+
+.hero-resume-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  border: 1px solid var(--amber);
+  border-radius: 2px;
+  padding: 0.5rem 1.05rem;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.hero-resume-link:hover,
+.hero-resume-link:focus-visible {
+  background: var(--amber);
+  color: var(--bg);
+}
+
+.hero-resume-meta {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--olive-light);
 }
 
 .hero-arrow {
@@ -687,7 +739,7 @@ footer {
   }
 
   #hero {
-    padding: 0 1.4rem 4rem;
+    padding: 5.5rem 1.4rem 4rem;
   }
 
   .section {

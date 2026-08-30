@@ -11,10 +11,35 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      /* Set before first paint so the boot overlay covers the page while
+         sections + the Three.js hero are still loading. Added by JS so a
+         no-JS visitor never gets stuck behind the overlay. */
+      document.documentElement.classList.add("is-booting");
+      /* Last-resort release: if the module graph never runs at all (e.g. the
+         Three.js CDN is unreachable), the page must still show itself. */
+      setTimeout(function () {
+        document.documentElement.classList.remove("is-booting");
+      }, 8000);
+    </script>
   </head>
   <body>
     <!-- Grain overlay -->
     <div class="grain-overlay" aria-hidden="true"></div>
+
+    <!-- Boot overlay: held up until sections + hero animation are ready -->
+    <div
+      class="boot-loader"
+      id="boot-loader"
+      role="status"
+      aria-live="polite"
+      aria-label="Loading"
+    >
+      <div class="boot-loader-inner">
+        <span class="boot-loader-spinner" aria-hidden="true"></span>
+        <span class="boot-loader-text">Loading terrain</span>
+      </div>
+    </div>
 
     <!-- Navigation -->
     <nav id="nav">
